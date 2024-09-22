@@ -1,0 +1,85 @@
+.apartment-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Разстояние между кутиите */
+}
+
+.project-card {
+    width: 250px; /* Определяне на ширината на контейнера */
+    height: auto; /* Автоматична височина, която се разтяга спрямо съдържанието */
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 15px; /* Заоблени ъгли */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center; /* Центриране на текста */
+    transition: transform 0.3s ease; /* Анимация при уголемяване */
+}
+
+.project-card:hover {
+    transform: scale(1.05); /* Ефект на уголемяване при hover */
+}
+
+.project-info h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.project-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Медийни заявки за по-малки екрани */
+@media (max-width: 768px) {
+    .apartment-container {
+        flex-direction: column; /* Когато екранът е малък, проектите ще се подреждат един под друг */
+        align-items: center; /* Центриране на проектите в колона */
+    }
+
+    .project-card {
+        width: 100%; /* Проектите ще се разтеглят на цялата ширина на контейнера при по-малки екрани */
+    }
+}
+
+
+.apartment-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.project-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.project-card:hover {
+    transform: scale(1.05);
+}
+
+.add-apartment-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0f7fa;
+    cursor: pointer;
+}
+
+.add-apartment-card:hover {
+    background-color: #b2ebf2;
+}

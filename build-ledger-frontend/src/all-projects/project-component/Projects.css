@@ -1,0 +1,87 @@
+.projects-container {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center; /* Центриране на заглавието */
+}
+
+.projects-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Центриране на проектите в средата */
+    gap: 20px; /* Разстояние между проектите */
+    margin-top: 20px; /* Разстояние между заглавието и проектите */
+}
+
+.project-card {
+    width: 250px; /* Определяне на ширината на контейнера */
+    height: auto; /* Автоматична височина, която се разтяга спрямо съдържанието */
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 15px; /* Заоблени ъгли */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center; /* Центриране на текста */
+    transition: transform 0.3s ease; /* Анимация при уголемяване */
+}
+
+.project-card:hover {
+    transform: scale(1.05); /* Ефект на уголемяване при hover */
+}
+
+.project-info h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.project-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.divider {
+    border: none;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .projects-wrapper {
+        flex-direction: column; /* Когато екранът е малък, проектите ще се подреждат един под друг */
+        align-items: center; /* Центриране на проектите в колона */
+    }
+
+    .project-card {
+        width: 100%; /* Проектите ще се разтеглят на цялата ширина на контейнера при по-малки екрани */
+        height: auto;
+    }
+}
+
+.project-icon {
+    position: absolute;
+    bottom: 10px; /* Позициониране в долния десен ъгъл */
+    right: 10px;
+    font-size: 24px; /* Размер на иконката */
+    color: #333; /* Цвят на иконката */
+}
+
+.project-card {
+    position: relative; /* За да може иконата да се позиционира вътре в контейнера */
+    width: 250px;
+    height: auto; /* Автоматична височина, разтягаща се според съдържанието */
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: scale(1.05);
+}

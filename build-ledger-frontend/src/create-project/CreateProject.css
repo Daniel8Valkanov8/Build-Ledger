@@ -1,0 +1,58 @@
+/* Центрирай контейнера на екрана */
+.container-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Височина на видимата част на екрана */
+    background-color: #f7f7f7; /* Светъл фон */
+    padding: 20px; /* Вътрешно разстояние за по-добра видимост на малки екрани */
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 500px; /* Широчина на картата с максимална ширина */
+    background-color: #fff; /* Фон на картата */
+    padding: 20px 25px; /* Вътрешно разстояние */
+    border-radius: 8px; /* Заоблени ръбове */
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); /* Сянка */
+    margin: 0 auto; /* Центриране на картата */
+  }
+  
+  .card-body {
+    padding: 20px; /* Вътрешно разстояние на съдържанието на картата */
+  }
+  
+  h1 {
+    text-align: center; /* Центрира заглавието */
+  }
+  
+  form .form-group {
+    margin-bottom: 20px; /* Разстояние между форм групите */
+  }
+  
+  form .form-group input, form .form-group .react-datepicker__input-container, 
+  form .form-group select {
+    width: 100%; /* Ширина на входните полета */
+  }
+  
+  form .form-group label {
+    display: block; /* Дисплей блок за етикетите */
+    margin-bottom: 5px; /* Разстояние под етикетите */
+  }
+  
+  /* Поставяне на полета за дати едно до друго */
+  .date-group {
+    display: flex;
+    gap: 10px; /* Разстояние между полетата */
+  }
+  
+  .date-group .form-group {
+    flex: 1; /* Всеки елемент да заема равна ширина */
+  }
+  
+  button[type="submit"] {
+    width: 100%; /* Ширина на бутона */
+    padding: 10px; /* Вътрешно разстояние на бутона */
+    font-size: 16px; /* Размер на шрифта на бутона */
+  }
+  
