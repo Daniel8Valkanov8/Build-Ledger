@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../all-projects/project-component/Projects.css';
+import { CooperationContext } from '../navigation/CooperationContext'; // Импортираме контекста
 
 const BuildingComponent = ({ building, projectTitle }) => {
     const [buildingDetails, setBuildingDetails] = useState(null);
+    const { setCooperation } = useContext(CooperationContext); // Използваме глобалния state
     const navigate = useNavigate();
 
     const handleClick = async () => {
         try {
-            // Изпрати GET заявка за детайли на сградата
             const response = await axios.get(`http://localhost:8080/buildings/${building.id}`);
-            const buildingData = response.data; // Запази данните от отговора
+            const buildingData = response.data;
 
-            setBuildingDetails(buildingData); // Запази данните в локалното състояние
+            setBuildingDetails(buildingData);
 
-            // Проверка на типа на сградата и съответно навигация
             if (buildingData.type === 'Cooperation') {
+                setCooperation(buildingData); // Актуализираме глобалното състояние
                 navigate(`/cooperation/${building.id}`, { state: { projectTitle, building: buildingData } });
             } else if (buildingData.type === 'House') {
                 navigate(`/house/${building.id}`, { state: { projectTitle, building: buildingData } });
@@ -29,13 +29,9 @@ const BuildingComponent = ({ building, projectTitle }) => {
     };
 
     return (
-        <div 
-            className="project-card" 
-            onClick={handleClick} 
-            style={{ cursor: 'pointer' }}
-        >
+        <div className="project-card" onClick={handleClick} style={{ cursor: 'pointer' }}>
             <div className="project-info">
-                <h2>{building.title}</h2> {/* Тук визуализираме заглавието на сградата */}
+                <h2>{building.title}</h2>
             </div>
         </div>
     );

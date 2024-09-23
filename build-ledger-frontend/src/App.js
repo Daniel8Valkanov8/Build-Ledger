@@ -10,6 +10,7 @@ import CooperationNavbar from "./navigation/CooperationNavbar";
 import CreateCooperationObjects from "./building/cooperation/create-objects/CreateCooperationObjects";
 
 import AllApartments from './apartment/AllApartmentsComponent'; // Импортираме новия компонент
+import { CooperationProvider } from "./navigation/CooperationContext";
 
 const AppContent = () => {
   const location = useLocation();
@@ -60,8 +61,11 @@ const AppContent = () => {
 
 class App extends Component {
   render() {
-    return <AppContent />;
-  }
+
+    return (<CooperationProvider>
+      <AppContent />;
+    </CooperationProvider>
+   );} 
 }
 
 export default App;

@@ -1,15 +1,15 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 
-const CooperationContext = createContext();
+// Създаваме контекст за кооперация
+export const CooperationContext = createContext();
 
+// Провайдър компонент
 export const CooperationProvider = ({ children }) => {
-    const [currentCooperation, setCurrentCooperation] = useState(null);
+    const [cooperation, setCooperation] = useState(null);
 
     return (
-        <CooperationContext.Provider value={{ currentCooperation, setCurrentCooperation }}>
+        <CooperationContext.Provider value={{ cooperation, setCooperation }}>
             {children}
         </CooperationContext.Provider>
     );
 };
-
-export const useCooperation = () => useContext(CooperationContext);
