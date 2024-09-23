@@ -1,9 +1,7 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-// Създаване на Context за кооперацията
 const CooperationContext = createContext();
 
-// Провайдър компонент, който ще предоставя състоянието
 export const CooperationProvider = ({ children }) => {
     const [currentCooperation, setCurrentCooperation] = useState(null);
 
@@ -14,7 +12,4 @@ export const CooperationProvider = ({ children }) => {
     );
 };
 
-// Hook за лесен достъп до Context-а
-export const useCooperation = () => {
-    return useContext(CooperationContext);
-};
+export const useCooperation = () => useContext(CooperationContext);
