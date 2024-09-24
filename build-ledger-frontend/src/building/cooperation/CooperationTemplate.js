@@ -73,11 +73,11 @@ const CooperationTemplate = () => {
 
     return (
         <div>
-            <h1>Cooperation: {building.title} in {projectTitle}</h1>
+            <h1>{building.title} in {projectTitle}</h1>
             <div className="buildings-container">
                 <div>Description: {building.description}</div>
                 <div>Rsp: {building.rsp}</div>
-                <div>Stages: AKT 14, AKT 15</div>
+                <div>Stages: {building.stages}  Example: AKT 14, AKT 15</div>
             </div>
             
         </div>

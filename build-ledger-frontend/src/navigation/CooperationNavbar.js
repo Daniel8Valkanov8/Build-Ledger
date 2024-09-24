@@ -9,10 +9,12 @@ const CooperationNavbar = () => {
 
     return (
         <nav className="navbar navbar-expand navbar-blue bg-blue">
-            <Link to="/" className="navbar-brand">
+
+            <li className="nav-item">
+            <Link to={`/cooperation/${cooperation.id}`} className="navbar-brand">
                 {cooperation.title} {/* Показва името на кооперацията */}
             </Link>
-
+            </li>
             <div className="navbar-nav ml-auto">
                 <li className="nav-item">
                     <Link to={`/quick-create/${cooperation.id}`} className="nav-link">
