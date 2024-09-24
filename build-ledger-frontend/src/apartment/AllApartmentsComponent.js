@@ -26,6 +26,7 @@ const AllApartments = () => {
         fetchApartments();
     }, [id]);
 
+    // Функция за добавяне на нов апартамент
     const handleAddApartment = () => {
         navigate(`/apartment/add/${id}`);
     };
@@ -42,6 +43,7 @@ const AllApartments = () => {
                         projectTitle={`Cooperation ${id}`}
                     />
                 ))}
+                {/* Кутийка за добавяне на нов апартамент */}
                 <div 
                     className="project-card add-apartment-card"
                     onClick={handleAddApartment} 

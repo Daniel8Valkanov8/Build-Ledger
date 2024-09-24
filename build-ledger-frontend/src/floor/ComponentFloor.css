@@ -1,0 +1,55 @@
+/* Контейнер за всички етажи */
+.all-floors-container {
+    display: flex;
+    flex-wrap: wrap; /* За подредба в редове, ако има повече етажи */
+    justify-content: center; /* Центриране на кутиите хоризонтално */
+    gap: 20px; /* Разстояние между кутиите */
+    padding: 20px; /* Вътрешни отстояния */
+    min-height: 100vh; /* Пълна височина на изгледа */
+    background-color: #f0f0f0; /* Лек фон за по-добра видимост на кутиите */
+}
+
+/* Стил за всяка кутия (FloorComponent) */
+.floor-component {
+    width: 250px; /* Ширина на всяка кутия */
+    max-width: 100%; /* Автоматично адаптиране при по-малки екрани */
+    margin-bottom: 20px; /* Разстояние между етажите */
+    padding: 20px; /* Вътрешно отстояние за съдържанието */
+    background-color: #fff; /* Бял фон за кутиите */
+    text-align: center; /* Центриране на текста */
+    border-radius: 12px; /* Заоблени ъгли */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Лека сянка за отделяне на кутиите */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Преходи за ефекта при hover */
+}
+
+/* Ефект при hover */
+.floor-component:hover {
+    transform: scale(1.05); /* Леко увеличение */
+    background-color: #e0f7fa; /* Промяна на фона при hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Засилена сянка при hover */
+}
+
+/* Текстов стилове в кутиите */
+.floor-component h2 {
+    font-size: 22px; /* По-голям размер за заглавието на етажа */
+    margin: 10px 0;
+    color: #333; /* Тъмен текст за контраст */
+}
+
+.floor-component p {
+    font-size: 16px; /* По-малък шрифт за детайлите */
+    color: #666; /* По-светъл цвят за текстовото съдържание */
+}
+
+/* Медийни заявки за мобилни устройства */
+@media (max-width: 768px) {
+    .all-floors-container {
+        flex-direction: column; /* Подреждане в колона на малки екрани */
+        align-items: center; /* Центриране на кутиите */
+    }
+
+    .floor-component {
+        width: 100%; /* Кутиите ще заемат пълната ширина */
+        max-width: 400px; /* Ограничение на максималната ширина на малки екрани */
+    }
+}

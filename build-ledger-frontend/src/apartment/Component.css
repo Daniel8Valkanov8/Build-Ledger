@@ -1,35 +1,34 @@
 .apartment-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Разпределя бутоните на двете страни */
     align-items: center; /* Центрира бутоните вертикално */
     margin-top: 15px;
     position: relative; /* Нужно за позициониране на кръглия бутон */
 }
 
 .apartment-actions .btn-success {
+    margin-right: 10px; /* Добавя разстояние между бутоните */
     width: auto; /* Подравняваме бутона "Sell" вляво */
 }
 
-.add-btn {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+.add-apartment-button {
+    background-color: #3c98e4; /* Основен цвят на бутона */
+    border: none;
     border-radius: 50%; /* Кръгъл бутон */
     width: 40px;
     height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #3e9e9f; /* Bootstrap основен цвят */
-    border: none;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.add-btn:hover {
-    background-color: #242c5b; /* По-тъмен син при hover */
+.add-apartment-button:hover {
+    background-color: #39ede1; /* По-тъмен зелен при hover */
 }
 
-.add-btn svg {
+.add-apartment-button svg {
     fill: white; /* Иконата е в бял цвят */
     pointer-events: none; /* Иконата няма да прихваща събития на клик */
 }
