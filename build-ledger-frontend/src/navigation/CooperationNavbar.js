@@ -25,16 +25,16 @@ const CooperationNavbar = () => {
 
             <div className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <Link to={`/cooperation/${cooperation.id}/floors`} className="nav-link">
-                        Floors
+                    <Link to={`/cooperation/${cooperation.id}/apartments`} className="nav-link">
+                        Apartments
                     </Link>
                 </li>
             </div>
 
             <div className="navbar-nav ml-auto">
                 <li className="nav-item">
-                    <Link to={`/cooperation/${cooperation.id}/apartments`} className="nav-link">
-                        Apartments
+                    <Link to={`/cooperation/${cooperation.id}/floors`} className="nav-link">
+                        Floors
                     </Link>
                 </li>
             </div>
