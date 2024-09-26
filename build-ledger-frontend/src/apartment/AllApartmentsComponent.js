@@ -2,33 +2,46 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ApartmentComponent from './ApartmentComponent';
+import UpdateApartment from './UpdateApartment'; // Импортираме UpdateApartment компонента
 import './Apartment.css';
 
 const AllApartments = () => {
     const { id } = useParams();
     const [apartments, setApartments] = useState([]);
+    const [floors, setFloors] = useState([]); 
+    const [selectedApartment, setSelectedApartment] = useState(null);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchApartments = async () => {
-            console.log(`Fetching apartments for cooperation ${id}`);
-            try {
-                const response = await axios.get(`http://localhost:8080/apartments/${id}`);
-                console.log(response);
-                setApartments(response.data);
-            } catch (err) {
-                console.error(err);
-                setError('Failed to fetch apartments.');
-            }
-        };
+    // Функция за презареждане на апартаментите
+    const fetchApartmentsAndFloors = async () => {
+        console.log(`Fetching apartments and floors for cooperation ${id}`);
+        try {
+            const [apartmentsResponse, floorsResponse] = await Promise.all([
+                axios.get(`http://localhost:8080/apartments/${id}`),
+                axios.get(`http://localhost:8080/floors/${id}`)
+            ]);
 
-        fetchApartments();
+            setApartments(apartmentsResponse.data);
+            setFloors(floorsResponse.data);
+            console.log("Apartments:", apartmentsResponse.data);
+            console.log("Floors:", floorsResponse.data);
+        } catch (err) {
+            console.error(err);
+            setError('Failed to fetch apartments and floors.');
+        }
+    };
+
+    useEffect(() => {
+        fetchApartmentsAndFloors();
     }, [id]);
 
-    // Функция за добавяне на нов апартамент
-    const handleAddApartment = () => {
-        navigate(`/apartment/add/${id}`);
+    const handleAddApartment = (apartment) => {
+        setSelectedApartment(apartment);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedApartment(null);
     };
 
     return (
@@ -41,19 +54,22 @@ const AllApartments = () => {
                         key={apartment.id}
                         apartment={apartment}
                         projectTitle={`Cooperation ${id}`}
+                        onAddApartment={() => handleAddApartment(apartment)}
                     />
                 ))}
-                {/* Кутийка за добавяне на нов апартамент */}
-                <div 
-                    className="project-card add-apartment-card"
-                    onClick={handleAddApartment} 
-                    style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" className="bi bi-plus" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                    </svg>
-                </div>
             </div>
+
+            {selectedApartment && (
+                <UpdateApartment
+                    show={!!selectedApartment}
+                    handleClose={handleCloseModal}
+                    apartmentNumber={selectedApartment.number}
+                    cooperationNumber={id}
+                    floors={floors}
+                    apartmentId={selectedApartment.id}
+                    refreshApartments={fetchApartmentsAndFloors} // Предаваме функцията за презареждане
+                />
+            )}
         </div>
     );
 };

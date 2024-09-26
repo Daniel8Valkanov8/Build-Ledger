@@ -2,27 +2,30 @@ import React, { useState } from 'react';
 import './UpdateApartment.css';
 import axios from 'axios';
 
-const UpdateApartment = ({ show, handleClose, apartmentNumber, cooperationNumber, floors, apartmentId }) => {
+const UpdateApartment = ({ show, handleClose, apartmentNumber, cooperationNumber, floors, apartmentId, refreshApartments }) => {
     const [area, setArea] = useState('');
     const [bedroomCount, setBedroomCount] = useState('');
     const [bathroomCount, setBathroomCount] = useState('');
+    const [price, setPrice] = useState('');
     const [floorId, setFloorId] = useState('');
 
     const handleSaveChanges = async () => {
         const updateData = {
             id: apartmentId,
-            cooperationId: null, // Set to null or provide actual value if needed
+            cooperationId: null, 
             number: apartmentNumber,
-            area: area ? parseFloat(area) : null, // Use null if area is not provided
-            bedroomCount: bedroomCount ? parseInt(bedroomCount) : null, // Use null if bedroom count is not provided
-            bathroomCount: bathroomCount ? parseInt(bathroomCount) : null, // Use null if bathroom count is not provided
-            floorId: floorId || null, // Use selected floor ID or null
+            area: area ? parseFloat(area) : null,
+            priceEur: price ? parseFloat(price) : null,
+            bedroomCount: bedroomCount ? parseInt(bedroomCount) : null,
+            bathroomCount: bathroomCount ? parseInt(bathroomCount) : null,
+            floorId: floorId || null,
         };
         
         try {
             const response = await axios.put(`http://localhost:8080/apartments/update`, updateData);
             console.log(response.data);
-            handleClose(); // Close the modal after saving
+            handleClose(); // Затваряне на модала след успешния запис
+            refreshApartments(); // Презареждаме списъка с апартаменти
         } catch (error) {
             console.error("Error updating apartment:", error);
         }
@@ -36,7 +39,7 @@ const UpdateApartment = ({ show, handleClose, apartmentNumber, cooperationNumber
             <div className="modal-dialog modal-dialog-centered" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">{apartmentNumber} in {cooperationNumber}</h5>
+                        <h5 className="modal-title">{apartmentNumber} in Cooperation {cooperationNumber}</h5>
                     </div>
                     <div className="modal-body">
                         <div className="form-group">
@@ -57,6 +60,17 @@ const UpdateApartment = ({ show, handleClose, apartmentNumber, cooperationNumber
                                     <option key={floor.id} value={floor.id}>{floor.number}</option>
                                 ))}
                             </select>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="price">Price</label>
+                            <input
+                                type="text" 
+                                className="form-control no-spinner" 
+                                id="price" 
+                                value={price} 
+                                onChange={(e) => setPrice(e.target.value)} 
+                                placeholder="Price in €"
+                            />
                         </div>
                         <div className="form-group">
                             <label htmlFor="bedroom">Bedroom Count</label>

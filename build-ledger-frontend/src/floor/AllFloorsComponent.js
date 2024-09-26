@@ -12,7 +12,7 @@ const AllFloors = () => {
 
     useEffect(() => {
         const fetchFloors = async () => {
-            console.log(`Fetching apartments for cooperation ${id}`);
+            console.log(`Fetching floors for cooperation ${id}`);
             try {
                 const response = await axios.get(`http://localhost:8080/floors/${id}`);
                 console.log(response);

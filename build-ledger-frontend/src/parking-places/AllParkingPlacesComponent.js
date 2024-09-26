@@ -3,31 +3,48 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../apartment/Apartment.css';
 import ParkingPlaceComponent from './ParkingPlaceComponent';
+import UpdateParkingPlace from './UpdateParkingPlace'; // Добавяне на UpdateParkingPlace
 
 const AllParkingPlaces = () => {
     const { id } = useParams();
-    const [parkingPlaces, setgarages] = useState([]);
+    const [parkingPlaces, setParkingPlaces] = useState([]);
+    const [floors, setFloors] = useState([]); // Поддръжка на етажи
+    const [selectedParkingPlace, setSelectedParkingPlace] = useState(null); // Избрано паркомясто
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchGarages = async () => {
-            console.log(`Fetching apartments for cooperation ${id}`);
-            try {
-                const response = await axios.get(`http://localhost:8080/parking-places/${id}`);
-                console.log(response)
-                setgarages(response.data);
-            } catch (err) {
-                console.error(err);
-                setError('Failed to fetch apartments.');
-            }
-        };
+    // Фетчване на паркоместа и етажи
+    const fetchParkingPlacesAndFloors = async () => {
+        try {
+            const [parkingPlacesResponse, floorsResponse] = await Promise.all([
+                axios.get(`http://localhost:8080/parking-places/${id}`),
+                axios.get(`http://localhost:8080/floors/${id}`)
+            ]);
+            setParkingPlaces(parkingPlacesResponse.data);
+            setFloors(floorsResponse.data);
+        } catch (err) {
+            console.error(err);
+            setError('Failed to fetch parking places and floors.');
+        }
+    };
 
-        fetchGarages();
+    useEffect(() => {
+        fetchParkingPlacesAndFloors();
     }, [id]);
 
-    const handleAddParkingPlace = () => {
-        navigate(`parking-places/add/${id}`);
+    // Функция за отваряне на модала за актуализиране на паркомясто
+    const handleAddParkingPlace = (parkingPlace) => {
+        setSelectedParkingPlace(parkingPlace);
+    };
+
+    // Затваряне на модала
+    const handleCloseModal = () => {
+        setSelectedParkingPlace(null);
+    };
+
+    // Навигация към добавяне на ново паркомясто
+    const handleAddNewParkingPlace = () => {
+        navigate(`/parking-places/add/${id}`);
     };
 
     return (
@@ -40,11 +57,12 @@ const AllParkingPlaces = () => {
                         key={parkingPlace.id}
                         parkingPlace={parkingPlace}
                         projectTitle={`Cooperation ${id}`}
+                        onAddParkingPlace={() => handleAddParkingPlace(parkingPlace)} // Подаваме правилната функция за модала
                     />
                 ))}
                 <div 
                     className="project-card add-apartment-card"
-                    onClick={handleAddParkingPlace} 
+                    onClick={handleAddNewParkingPlace} 
                     style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" className="bi bi-plus" viewBox="0 0 16 16">
@@ -52,6 +70,19 @@ const AllParkingPlaces = () => {
                     </svg>
                 </div>
             </div>
+
+            {/* Модал за актуализиране на паркомясто */}
+            {selectedParkingPlace && (
+                <UpdateParkingPlace
+                    show={!!selectedParkingPlace}
+                    handleClose={handleCloseModal}
+                    parkingPlaceNumber={selectedParkingPlace.number}
+                    cooperationNumber={id}
+                    floors={floors}
+                    parkingId={selectedParkingPlace.id}
+                    refreshParkingPlaces={fetchParkingPlacesAndFloors} // Предаваме функцията за презареждане
+                />
+            )}
         </div>
     );
 };
