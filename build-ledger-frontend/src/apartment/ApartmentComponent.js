@@ -19,7 +19,6 @@ const ApartmentComponent = ({ apartment, projectTitle, onAddApartment }) => {
             <div className="project-info" onClick={handleViewDetails}>
                 <h2>{apartment.number}</h2>
                 <p><strong>Area: </strong> {apartment.area} m²</p>
-                <p><strong>Price: </strong> {apartment.priceLv} BGN</p>
                 <p><strong>Floor: </strong> {apartment.floor}</p>
                 <p><strong>Price: </strong> {apartment.priceEur} €</p>
                 <p><strong>Status: </strong> {apartment.sold ? 'Sold' : 'Free'}</p>

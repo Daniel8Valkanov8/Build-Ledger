@@ -12,7 +12,7 @@ const UpdateGarage = ({ show, handleClose, cooperationNumber, garageNumber, floo
         const selectedFloor = floors.find(floor => floor.id === parseInt(floorId)); 
         
         // Проверка дали етажът е надземен (номерът му е по-голям от 0)
-        if (selectedFloor && parseInt(selectedFloor.number) > 0) { 
+        if (selectedFloor && parseInt(selectedFloor.number) > 3) { 
             setErrorMessage('Гаражът не може да се намира на надземен етаж.');
             return;
         }

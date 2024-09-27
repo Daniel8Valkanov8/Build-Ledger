@@ -54,6 +54,14 @@ const CooperationNavbar = () => {
                     </Link>
                 </li>
             </div>
+
+            <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                    <Link to={`/cooperation/${cooperation.id}/create-sell`} className="nav-link">
+                        Create Sell
+                    </Link>
+                </li>
+            </div>
         </nav>
     );
 };

@@ -70,7 +70,7 @@ const CreateCooperationObjects = () => {
 
     return (
         <div className="card mt-4">
-            <h1>Quick create in Cooperation</h1>
+            <h1>Quick create Objects</h1>
             <form onSubmit={createBuilding}>
                 {success && <div className="alert alert-success">{success}</div>}
                 

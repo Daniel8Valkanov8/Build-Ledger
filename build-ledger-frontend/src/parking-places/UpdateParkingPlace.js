@@ -4,18 +4,20 @@ import axios from 'axios';
 
 const UpdateGarage = ({ show, handleClose, cooperationNumber, parkingPlaceNumber, parkingId, refreshParkingPlaces }) => {
     const [price, setPrice] = useState('');
-    const [errorMessage] = useState(''); // Съобщение за грешка
+    const [errorMessage, setErrorMessage] = useState(''); // Добавяме setErrorMessage за валидация
 
     const handleSaveChanges = async () => {
-        // Намиране на избрания етаж по ID
+        // Валидация на цена
+        if (isNaN(price) || price <= 0) {
+            setErrorMessage("Please enter a valid price.");
+            return;
+        }
         
-      
-
-        // Ако няма грешка, продължаваме с PUT заявката
+        // Подготовка на данните за PUT заявката
         const updateData = {
             id: parkingId,
             number: parkingPlaceNumber,
-           
+            priceEur: parseFloat(price), // Трябва да конвертираме цената в число
         };
         
         try {
@@ -25,6 +27,7 @@ const UpdateGarage = ({ show, handleClose, cooperationNumber, parkingPlaceNumber
             refreshParkingPlaces(); // Презареждаме списъка с гаражи
         } catch (error) {
             console.error("Error updating parking place:", error);
+            setErrorMessage("Failed to update parking place.");
         }
     };
 

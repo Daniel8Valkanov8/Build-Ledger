@@ -14,6 +14,7 @@ import { CooperationProvider } from "./navigation/CooperationContext";
 import AllFloors from "./floor/AllFloorsComponent";
 import AllGarages from "./garages/AllGaragesComponent";
 import AllParkingPlaces from "./parking-places/AllParkingPlacesComponent";
+import CreateSell from "./ledger/sell/CreateSell";
 
 const AppContent = () => {
   const location = useLocation();
@@ -49,17 +50,19 @@ const AppContent = () => {
           <Route path="/all-projects" element={<AllProjects />} />
           <Route path="/project/:id" element={<IndividualProjectTemplate />} />
           <Route path="/parcel/:id" element={<ParcelTemplate />} />
+          <Route path="/building/:id" element={<div>Building Template</div>} />
+          <Route path="/house/:id" element={<div>House Template</div>} />
+          <Route path="*" element={<div>404 Not Found</div>} />
+
           <Route path="/cooperation/:id" element={<CooperationTemplate />} />
           <Route path="/quick-create/:id" element={<CreateCooperationObjects />} />
           <Route path="/cooperation/:id/apartments" element={<AllApartments />} /> {/* Добавяме новия маршрут */}
           <Route path="/cooperation/:id/floors" element={<AllFloors />} /> 
-
           <Route path="/cooperation/:id/garages" element={<AllGarages />} /> 
           <Route path="/cooperation/:id/parking-places" element={<AllParkingPlaces />} /> 
+          <Route path="/cooperation/:id/create-sell" element={<CreateSell />} /> 
 
-          <Route path="/building/:id" element={<div>Building Template</div>} />
-          <Route path="/house/:id" element={<div>House Template</div>} />
-          <Route path="*" element={<div>404 Not Found</div>} />
+          
         </Routes>
       </div>
     </div>

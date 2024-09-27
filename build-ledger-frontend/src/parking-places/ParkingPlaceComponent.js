@@ -15,6 +15,7 @@ const ParkingPlaceComponent = ({ parkingPlace, projectTitle, onAddParkingPlace }
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div className="project-info" onClick={handleViewDetails} style={{ flexGrow: 1 }}>
                     <h2 style={{ margin: 0 }}>{parkingPlace.number}</h2>
+                    <p><strong>Price: </strong> {parkingPlace.priceEur} €</p>
                     <p><strong>Status: </strong> {parkingPlace.sold ? 'Sold' : 'Free'}</p>
                 </div>
 

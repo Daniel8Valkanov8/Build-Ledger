@@ -1,0 +1,152 @@
+/* Основен стил за drag-and-drop компонента */
+.drag-drop {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  
+  /* Зона за качване на документи */
+  .document-uploader {
+    border: 2px dashed #4282fe;
+    background-color: #f4fbff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  
+  .document-uploader.active {
+    border-color: #6dc24b; /* При успешно качване */
+  }
+  
+  /* Информация за качването */
+  .upload-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .upload-info svg {
+    font-size: 36px;
+    margin-right: 1rem;
+  }
+  
+  .upload-info div p {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .upload-info div p:first-child {
+    font-weight: bold;
+  }
+  
+  /* Стил за бутона Browse */
+  .browse-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #4282fe;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  .browse-btn:hover {
+    background-color: transparent;
+    color: #4282fe;
+  }
+  
+  /* Списък с файловете */
+  .file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    height: 30vh;
+  }
+  
+  .file-list__container {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto; /* Скрол при много файлове */
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  /* Всеки файл в списъка */
+  .file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .file-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Информация за файла */
+  .file-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+  }
+  
+  .file-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Действия за премахване на файл */
+  .file-actions {
+    cursor: pointer;
+  }
+  
+  .file-actions svg {
+    font-size: 18px;
+    color: #888;
+    transition: color 0.3s ease;
+  }
+  
+  .file-actions:hover svg {
+    color: #d44;
+  }
+  
+  /* Успешно качен файл */
+  .success-file {
+    display: flex;
+    align-items: center;
+    color: #6dc24b;
+    margin-top: 10px;
+  }
+  
+  .success-file p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  /* Скриване на input за файловете */
+  input[type="file"] {
+    display: none;
+  }
+  
