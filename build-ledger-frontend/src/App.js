@@ -15,6 +15,7 @@ import AllFloors from "./floor/AllFloorsComponent";
 import AllGarages from "./garages/AllGaragesComponent";
 import AllParkingPlaces from "./parking-places/AllParkingPlacesComponent";
 import CreateSell from "./ledger/sell/CreateSell";
+import CreatePaymentSchema from "./ledger/payment/create-payment-schema/CreatePaymentSchema";
 
 const AppContent = () => {
   const location = useLocation();
@@ -61,7 +62,7 @@ const AppContent = () => {
           <Route path="/cooperation/:id/garages" element={<AllGarages />} /> 
           <Route path="/cooperation/:id/parking-places" element={<AllParkingPlaces />} /> 
           <Route path="/cooperation/:id/create-sell" element={<CreateSell />} /> 
-
+          <Route path="/create-payment-schema" element={<CreatePaymentSchema/>} />
           
         </Routes>
       </div>

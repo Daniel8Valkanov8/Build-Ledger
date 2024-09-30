@@ -23,6 +23,14 @@ const Navbar = () => {
           </Link>
         </li>
       </div>
+      <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                    <Link to={`/create-payment-schema`} className="nav-link">
+                        Create Payment Schema
+
+                    </Link>
+                </li>
+            </div>
     </nav>
   );
 };

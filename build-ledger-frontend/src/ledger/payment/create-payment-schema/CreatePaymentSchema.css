@@ -1,0 +1,130 @@
+/* CreatePaymentSchema.css */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-small {
+    width: 150px;
+}
+
+.form-group-count,
+.form-group-installment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.invalid-feedback {
+    color: red;
+    font-size: 14px;
+}
+.payment-schema-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.schema-list {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.form-container {
+    flex: 2;
+}
+
+.schema-item {
+    margin-bottom: 20px;
+}
+
+.schema-title {
+    text-align: center;
+    font-weight: bold;
+}
+
+hr {
+    border: 1px solid #ccc;
+    margin: 10px 0;
+}
+.payment-schema-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.schema-list {
+    flex: 1;
+    margin-right: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
+    border: 1px solid #ccc; /* Outline */
+}
+
+.form-container {
+    flex: 2;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px; /* Rounded corners for the form as well */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for the form */
+    border: 1px solid #ccc; /* Outline for the form */
+}
+
+.schema-item {
+    margin-bottom: 20px;
+}
+
+.schema-title {
+    text-align: center;
+    font-weight: bold;
+}
+
+hr {
+    border: 1px solid #ccc;
+    margin: 10px 0;
+}
+.payment-schema-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px; /* Add some space from the top */
+}
+
+.schema-list {
+    flex: 1;
+    margin-right: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
+    border: 1px solid #ccc; /* Outline */
+    min-height: 300px; /* Ensure a consistent height */
+}
+
+.form-container {
+    flex: 2;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
+    border: 1px solid #ccc; /* Outline */
+    min-height: 300px; /* Ensure the form also has a consistent height */
+}
+
+.schema-item {
+    margin-bottom: 20px;
+}
+
+.schema-title {
+    text-align: center;
+    font-weight: bold;
+}
+
+hr {
+    border: 1px solid #ccc;
+    margin: 10px 0;
+}

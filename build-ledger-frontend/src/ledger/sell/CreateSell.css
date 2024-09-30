@@ -1,0 +1,77 @@
+.input-file-container {
+    display: flex;
+    align-items: center;
+}
+
+.contract-input {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+.file-icon {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.file-icon:hover {
+    transform: scale(1.1);
+}
+
+.create-sell-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.contract-purchaser-broker-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.contract-container, .purchaser-container, .broker-container {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: 2px solid #007bff;
+    background-color: transparent;
+    color: #007bff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #007bff;
+    color: white;
+}
