@@ -92,7 +92,7 @@ const CreateProject = () => {
   };
 
   return (
-    <div className="container-center">
+    
       <div className="card">
         <div className="card-body">
           <h1>Start New Project</h1>
@@ -213,7 +213,7 @@ const CreateProject = () => {
           </form>
         </div>
       </div>
-    </div>
+    
   );
 };
 

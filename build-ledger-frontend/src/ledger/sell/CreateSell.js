@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './CreateSell.css';
+import axios from 'axios';
+
 
 const CreateSell = () => {
     const { id } = useParams();
@@ -14,8 +16,21 @@ const CreateSell = () => {
         garage: '',
         parkingPlace: ''
     });
-
+    const [paymentSchemas, setPaymentSchemas] = useState([]); 
     const [success, setSuccess] = useState(null);
+    
+    useEffect(() => {
+        const fetchPaymentSchemas = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/payment-schema');  // Replace with your API endpoint
+                setPaymentSchemas(response.data);  // Set the payment schemas in state
+            } catch (error) {
+                console.error('Error fetching payment schemas:', error);
+            }
+        };
+        fetchPaymentSchemas();
+    }, []);
+
 
     // Държи пътя до избрания файл
     const handleFileChange = (e) => {
@@ -35,7 +50,10 @@ const CreateSell = () => {
             [name]: value
         });
     };
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Handle form submission logic
+    };
     return (
         <div className="create-sell-container">
             <h1>Create Sell</h1>
@@ -74,7 +92,7 @@ const CreateSell = () => {
                     {/* Purchaser Section */}
                     <div className="purchaser-container">
                         <div className="form-group">
-                            <label htmlFor="purchaserFirstName">Purchaser First Name</label>
+                            <label htmlFor="purchaserFirstName">Purchaser</label>
                             <input
                                 type="text"
                                 className="form-control no-spinner"
@@ -103,7 +121,7 @@ const CreateSell = () => {
                     {/* Broker Section */}
                     <div className="broker-container">
                         <div className="form-group">
-                            <label htmlFor="brokerFirstName">Broker First Name</label>
+                            <label htmlFor="brokerFirstName">Broker</label>
                             <input
                                 type="text"
                                 className="form-control no-spinner"
@@ -137,7 +155,7 @@ const CreateSell = () => {
                         {success && <div className="alert alert-success">{success}</div>}
                         <div className="form-group contract-file-group">
                             <label htmlFor="contractNumber">Add Objects</label>
-                            <div className="input-file-container">
+                                <div className="input-file-container">
                                 <div className="file-icon" onClick={handleFileClick}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="46" fill="currentColor" class="bi bi-building-add" viewBox="0 0 16 16">
                                         <   path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0"/>
@@ -158,7 +176,7 @@ const CreateSell = () => {
                                 </svg>
                                 </div>
 
-                            </div>
+                                </div>
                         </div>
                         {/* Скрит input за файловия диалог */}
                         <input 
@@ -207,31 +225,29 @@ const CreateSell = () => {
                 </div>
 
                 <div className="contract-purchaser-broker-container">
-                    {/* Contract Section */}
-                    <div className="contract-container">
+                <div className="contract-container">
                         {success && <div className="alert alert-success">{success}</div>}
-                        <div className="form-group contract-file-group">
+                        
                         <div className="form-group">
-                            <label htmlFor="purchaserFirstName">Payment Schema</label>
-                            <input
-                                type="text"
-                                className="form-control no-spinner"
-                                id="purchaserFirstName"
-                                placeholder="TODO Get Mapping"
-                                
-                            />
+                            <label htmlFor="paymentSchema">Payment Schema</label>
+                            <select
+                                className="form-control"
+                                id="paymentSchema"
+                                name="paymentSchemaId"
+                                value={formData.paymentSchemaId}
+                                onChange={handleInputChange}
+                            >
+                                <option value="">Select a payment schema</option>
+                                {paymentSchemas.map(schema => (
+                                    <option key={schema.id} value={schema.id}>
+                                        {schema.title}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
-                        </div>
-                        {/* Скрит input за файловия диалог */}
-                        <input 
-                            type="file" 
-                            id="fileInput" 
-                            style={{ display: 'none' }} 
-                            onChange={handleFileChange}
-                        />
-                    </div>
 
-                    {/* Purchaser Section */}
+                        </div>
+                    {}
                     <div className="purchaser-container">
                        <label htmlFor="purchaserFirstName">Installments and Dates</label>
                         <div className="form-group">
