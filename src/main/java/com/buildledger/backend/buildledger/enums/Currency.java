@@ -1,2 +1,6 @@
-package com.buildledger.backend.buildledger.enums;public enum Currency {
+package com.buildledger.backend.buildledger.enums;
+
+public enum Currency {
+
+    EUR, BGN
 }

@@ -1,6 +1,7 @@
-package com.buildledger.backend.buildledger.model;
+package com.buildledger.backend.buildledger.model.sos;
 
 
+import com.buildledger.backend.buildledger.model.building.Building;
 import com.buildledger.backend.buildledger.model.ledger.Sell;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -17,9 +18,8 @@ public class Garage {
     private long id;
 
     private String number;
-    private double priceLv;
     private double priceEur;
-    private boolean sold;
+    private boolean sold = false;
     private String description;
 
 
@@ -34,6 +34,10 @@ public class Garage {
     @ManyToOne
     @JoinColumn(name = "apartment_id")
     private Apartment apartment;
+
+    @ManyToOne
+    @JoinColumn(name = "building_id")
+    private Building cooperation;
 
     public Garage(String number) {
         this.number = number;

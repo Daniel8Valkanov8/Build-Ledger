@@ -1,5 +1,7 @@
-package com.buildledger.backend.buildledger.model.persons;
+package com.buildledger.backend.buildledger.model.sos;
 
+import com.buildledger.backend.buildledger.model.building.Building;
+import com.buildledger.backend.buildledger.model.ledger.Sell;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table()
+@Table(name = "parking_places")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -17,5 +19,23 @@ public class ParkingPlace {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String number;
+    private double priceEur;
+    private boolean sold = false;
+    private String description;
+
+
+    @ManyToOne
+    @JoinColumn(name = "building_id")
+    private Building cooperation;
+
+    @ManyToOne
+    @JoinColumn(name = "sell_id")
+    private Sell sell;
+
+
+    public ParkingPlace(String number) {
+        this.number = number;
+    }
 }

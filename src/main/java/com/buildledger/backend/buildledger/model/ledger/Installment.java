@@ -1,4 +1,4 @@
-package com.buildledger.backend.buildledger.model;
+package com.buildledger.backend.buildledger.model.ledger;
 
 
 import com.buildledger.backend.buildledger.enums.Currency;
@@ -20,11 +20,16 @@ public class Installment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private double amountInPercent;
+
     private double installmentAmount;
 
     @Column
     @Enumerated(EnumType.STRING)
     private Currency currency;
+
+    @Column
+    private LocalDate installmentDate;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -34,9 +39,7 @@ public class Installment {
     @JoinColumn(name = "purchaser_id")
     private Purchaser purchaser;
 
-
-    @Column
-    private LocalDate installmentDate;
+    private double installmentReceivedAmount;
 
     @Column
     @Enumerated(EnumType.STRING)

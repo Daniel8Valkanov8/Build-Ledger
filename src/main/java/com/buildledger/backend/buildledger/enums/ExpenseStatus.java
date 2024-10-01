@@ -1,4 +1,4 @@
-package com.buildledger.backend.buildledger.model.ledger;
+package com.buildledger.backend.buildledger.enums;
 
 public enum ExpenseStatus {
     SERVICE, MATERIAL, TAX, OTHER

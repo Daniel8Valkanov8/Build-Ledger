@@ -1,6 +1,7 @@
-package com.buildledger.backend.buildledger.model;
+package com.buildledger.backend.buildledger.model.ledger;
 
 import com.buildledger.backend.buildledger.enums.Currency;
+import com.buildledger.backend.buildledger.model.Project;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

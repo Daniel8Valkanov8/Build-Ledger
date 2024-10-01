@@ -1,2 +1,18 @@
-package com.buildledger.backend.buildledger.model.building;public class House {
+package com.buildledger.backend.buildledger.model.building;
+
+
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+public class House extends Building {
+    private final String TYPE = "House";
+    public House() {
+        super();
+    }
 }

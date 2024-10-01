@@ -1,2 +1,4 @@
-package com.buildledger.backend.buildledger.controller;public class ExpenseController {
+package com.buildledger.backend.buildledger.controller.ledger;
+
+public class ExpenseController {
 }

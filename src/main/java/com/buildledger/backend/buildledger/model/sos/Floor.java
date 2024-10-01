@@ -1,4 +1,4 @@
-package com.buildledger.backend.buildledger.model;
+package com.buildledger.backend.buildledger.model.sos;
 
 
 import com.buildledger.backend.buildledger.model.building.Building;
@@ -18,9 +18,8 @@ public class Floor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String number;
-
     private Double commonArea;
     private int apartmentCount;
     private int fromApartmentNumber;
@@ -33,8 +32,8 @@ public class Floor {
 
     @ManyToOne
     //todo redaction of colum name
-    @JoinColumn(name = "project_id")
-    private Building project;
+    @JoinColumn(name = "building_id")
+    private Building cooperation;
 
     public Floor(String number) {
         this.number = number;

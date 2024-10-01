@@ -1,4 +1,4 @@
-package com.buildledger.backend.buildledger.service.impl;
+package com.buildledger.backend.buildledger.service.impl.building;
 
 import com.buildledger.backend.buildledger.dto.responce.ResponseBuildingDTO;
 import com.buildledger.backend.buildledger.dto.responce.ResponseBuildingImplementationDTO;
@@ -9,7 +9,6 @@ import com.buildledger.backend.buildledger.repository.BuildingRepository;
 import com.buildledger.backend.buildledger.repository.CooperationRepository;
 import com.buildledger.backend.buildledger.repository.HouseRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +49,8 @@ public class BuildingService {
         return responseBuildingDTOS;
     }
 
+
+    //когато натиснем върху съответната сграда, проверим дали е кооперация или къща, и върнем данни за статута
     public ResponseBuildingImplementationDTO getBuildingById(long id) {
         // Полиморфната логика за обработка на Cooperation
         Optional<Cooperation> cooperation = cooperationRepository.findById(id);
@@ -70,7 +71,9 @@ public class BuildingService {
     private ResponseBuildingImplementationDTO convertFromCooperation(Cooperation cooperation) {
         ResponseBuildingImplementationDTO cooperationDTO = new ResponseBuildingImplementationDTO();
         cooperationDTO.setTitle(cooperation.getTitle());
-        cooperationDTO.setType("Cooperation");  // Установяваме типа като "Cooperation"
+        cooperationDTO.setType("Cooperation");
+        // Установяваме типа като "Cooperation"
+        cooperationDTO.setId(cooperation.getId());
         return cooperationDTO;
     }
 

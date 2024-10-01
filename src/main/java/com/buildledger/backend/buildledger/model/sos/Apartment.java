@@ -1,5 +1,6 @@
-package com.buildledger.backend.buildledger.model;
+package com.buildledger.backend.buildledger.model.sos;
 
+import com.buildledger.backend.buildledger.model.building.Building;
 import com.buildledger.backend.buildledger.model.ledger.Sell;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,10 +19,8 @@ public class Apartment {
 
     private String number;
     private double area;
-    private double balconyArea;
-    private double priceLv;
     private double priceEur;
-    private boolean sold;
+    private boolean sold = false;
     private String description;
     private int bedroomCount;
     private int bathroomCount;
@@ -33,6 +32,10 @@ public class Apartment {
     private Floor floor;
 
     @ManyToOne
+    @JoinColumn(name = "building_id")
+    private Building cooperation;
+
+    @ManyToOne
     @JoinColumn(name = "sell_id")
     private Sell sell;
 
@@ -42,8 +45,7 @@ public class Apartment {
     public Apartment(String number) {
         this.number = number;
     }
-    //todo add cooperation
-    public Apartment() {
 
+    public Apartment() {
     }
 }

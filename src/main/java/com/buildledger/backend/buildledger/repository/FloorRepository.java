@@ -1,7 +1,11 @@
 package com.buildledger.backend.buildledger.repository;
+
+import com.buildledger.backend.buildledger.model.sos.Floor;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FloorRepositoryRepository extends JpaRepository<Floor, Long> {
+public interface FloorRepository extends JpaRepository<Floor, Long> {
+
 }

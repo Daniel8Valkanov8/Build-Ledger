@@ -1,8 +1,7 @@
-package com.buildledger.backend.buildledger.model;
+package com.buildledger.backend.buildledger.model.building;
 
 import com.buildledger.backend.buildledger.enums.Stage;
-import com.buildledger.backend.buildledger.model.ledger.Expense;
-import com.buildledger.backend.buildledger.model.ledger.Income;
+import com.buildledger.backend.buildledger.model.Parcel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,24 +11,23 @@ import java.util.Set;
 
 @Getter
 @Setter
-@Entity(name = "buildings")
-public class Building {
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)  // Или можете да използвате SINGLE_TABLE или TABLE_PER_CLASS
+@Table(name = "buildings")
+public abstract class Building {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String title;
-
     private String description;
-    private double rsp;
-
+    private double rsp;  // retail selling price
     private int garageCount;
     private int parkingPlaceCount;
     private int floorCount;
-    private int undergroundFloorCount;
-    private int apartmentCount;
+    private int entranceCount = 1;
 
     @ElementCollection(targetClass = Stage.class)
     @CollectionTable(name = "project_stages", joinColumns = @JoinColumn(name = "project_id"))
@@ -40,8 +38,4 @@ public class Building {
     @ManyToOne
     @JoinColumn(name = "parcel_id")
     private Parcel parcel;
-
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Floor> floors = new HashSet<>();
-
 }

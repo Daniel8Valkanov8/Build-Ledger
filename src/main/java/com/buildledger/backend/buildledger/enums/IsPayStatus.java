@@ -1,2 +1,7 @@
-package com.buildledger.backend.buildledger.enums;public enum IsPayStatus {
+package com.buildledger.backend.buildledger.enums;
+
+public enum IsPayStatus {
+    PAYED,
+    WAITING,
+    NOT_PAYED
 }

@@ -1,4 +1,4 @@
-package com.buildledger.backend.buildledger.model;
+package com.buildledger.backend.buildledger.model.ledger;
 
 import com.buildledger.backend.buildledger.enums.PaymentStatus;
 import jakarta.persistence.*;
@@ -15,6 +15,8 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    private String paymentScheme;
 
     @Column()
     @Enumerated(EnumType.STRING)

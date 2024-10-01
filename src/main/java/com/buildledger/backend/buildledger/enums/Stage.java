@@ -1,4 +1,4 @@
-package com.buildledger.backend.buildledger.model;
+package com.buildledger.backend.buildledger.enums;
 
 public enum Stage {
 

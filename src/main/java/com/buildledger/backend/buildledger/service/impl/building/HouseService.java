@@ -1,15 +1,14 @@
-package com.buildledger.backend.buildledger.service.impl;
+package com.buildledger.backend.buildledger.service.impl.building;
 
+import com.buildledger.backend.buildledger.dto.request.CreateIntermediateDTO;
 import com.buildledger.backend.buildledger.dto.request.CreateNewProjectDTO;
 import com.buildledger.backend.buildledger.model.Parcel;
-import com.buildledger.backend.buildledger.model.building.Cooperation;
 import com.buildledger.backend.buildledger.model.building.House;
 import com.buildledger.backend.buildledger.repository.HouseRepository;
 import com.buildledger.backend.buildledger.service.base.BaseBuildingService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -30,6 +29,24 @@ public class HouseService  extends BaseBuildingService<House> {
             house.setTitle("House " + (i+1));
             repository.save(house);
             houseRepository.save(house);
+        }
+    }
+
+    @Override
+    public void addEntryToCooperation(CreateIntermediateDTO createIntermediateDTO) {
+
+        Optional<House> houseOpt = houseRepository.findById(createIntermediateDTO.getId());
+
+        if (houseOpt.isPresent()) {
+            House house = houseOpt.get();
+            if(house.getEntranceCount()==1){
+                house.setEntranceCount(0);
+                int newCount = createIntermediateDTO.getEntrance();
+                int currentCount = house.getEntranceCount();
+                house.setEntranceCount(currentCount + newCount);
+            }
+            house.setEntranceCount(createIntermediateDTO.getEntrance());
+            houseRepository.saveAndFlush(house);
         }
     }
 }
