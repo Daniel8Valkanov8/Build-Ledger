@@ -93,4 +93,15 @@ public class ParkingPlaceService {
             throw new IllegalArgumentException("ParkingPlace with ID " + parkingPlaceID + " not found.");
         }
     }
+
+    public List<ResponseParkingPlaceDTO> getAllFreeParkingPlacesByCooperationID(long id) {
+        List<ParkingPlace> allFreeParkingPlacesByCooperationID = parkingPlaceRepository.getAllFreeParkingPlacesByCooperationID(id);
+        List<ResponseParkingPlaceDTO> response = new ArrayList<>();
+        for (ParkingPlace parkingPlace : allFreeParkingPlacesByCooperationID) {
+            ResponseParkingPlaceDTO dto = new ResponseParkingPlaceDTO();
+            BeanUtils.copyProperties(parkingPlace, dto);
+            response.add(dto);
+        }
+        return response;
+    }
 }

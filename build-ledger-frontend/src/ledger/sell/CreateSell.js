@@ -23,6 +23,9 @@ const CreateSell = () => {
         const fetchPaymentSchemas = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/payment-schema');  // Replace with your API endpoint
+                const apartments = axios.get(`http://localhost:8080/apartments/is-free/${id}`);
+                const garages = axios.get(`http://localhost:8080/garages/is-free/${id}`);
+                const parkingPlaces = axios.get(`http://localhost:8080/parking-places/${id}`);
                 setPaymentSchemas(response.data);  // Set the payment schemas in state
             } catch (error) {
                 console.error('Error fetching payment schemas:', error);

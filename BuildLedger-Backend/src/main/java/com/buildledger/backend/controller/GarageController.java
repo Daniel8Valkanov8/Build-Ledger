@@ -21,12 +21,21 @@ public class GarageController {
         this.garageService = garageService;
     }
 
+
+    @GetMapping("/is-free/{id}")
+    public ResponseEntity<List<ResponseGarageDTO>> getAllGaragesByCooperationID(@PathVariable long id) {
+        System.out.println("Fetching garages" + id);
+        List<ResponseGarageDTO> response = garageService.getAllFreeGaragesByCooperationID(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<List<ResponseGarageDTO>> getAllFloorsByCooperationID(@PathVariable long id) {
+    public ResponseEntity<List<ResponseGarageDTO>> getAllFreeGaragesByCooperationID(@PathVariable long id) {
         System.out.println("Fetching garages" + id);
         List<ResponseGarageDTO> response = garageService.getAllGaragesByCooperationID(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     @PutMapping("/update")
     public ResponseEntity<ResponseGarageDTO> updateGarage(@Valid @RequestBody UpdateGarageDTO updateGarageDTO) {

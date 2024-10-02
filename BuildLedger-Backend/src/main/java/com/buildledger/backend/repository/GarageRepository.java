@@ -13,4 +13,8 @@ import java.util.List;
 public interface GarageRepository extends JpaRepository<Garage, Long> {
     @Query("SELECT g FROM Garage g WHERE g.cooperation.id = :cooperationID")
     List<Garage> getAllGaragesByCooperationID(@Param("cooperationID") long cooperationID);
+
+    @Query("SELECT g FROM Garage g WHERE g.cooperation.id = :cooperationID AND g.sold = false")
+    List<Garage> getAllFreeGaragesByCooperationID(@Param("cooperationID") long id);
+
 }

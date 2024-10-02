@@ -82,4 +82,15 @@ public class ApartmentService {
         }
         return responseApartmentDTO;
     }
+
+    public List<ResponseApartmentDTO> getAllFreeApartmentsByCooperationID(long id) {
+        List<Apartment> response = apartmentRepository.getAllFreeApartmentsByCooperationID(id);
+        List<ResponseApartmentDTO> responseDTO = new ArrayList<>();
+        for (Apartment apartment : response) {
+            ResponseApartmentDTO dto = new ResponseApartmentDTO();
+            BeanUtils.copyProperties(apartment, dto);
+            responseDTO.add(dto);
+        }
+        return responseDTO;
+    }
 }

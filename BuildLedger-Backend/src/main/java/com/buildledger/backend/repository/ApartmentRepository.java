@@ -14,4 +14,8 @@ public interface ApartmentRepository extends JpaRepository<Apartment, Long> {
 
     @Query("SELECT a FROM Apartment a WHERE a.cooperation.id = :cooperationID")
     List<Apartment> getAllApartmentsByCooperationID(@Param("cooperationID") long cooperationID);
+
+    @Query("SELECT a FROM Apartment a WHERE a.cooperation.id = :cooperationID AND a.sold = false")
+    List<Apartment> getAllFreeApartmentsByCooperationID(@Param("cooperationID") long cooperationID);
+
 }

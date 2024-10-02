@@ -85,4 +85,16 @@ public class GarageService {
             throw new IllegalArgumentException("Garage with ID " + garageID + " not found.");
         }
     }
+
+    public List<ResponseGarageDTO> getAllFreeGaragesByCooperationID(long id) {
+   List<Garage> allFreeGaragesByCooperationID = garageRepository.getAllFreeGaragesByCooperationID(id);
+        List<ResponseGarageDTO> response = new ArrayList<>();
+        for (Garage garage : allFreeGaragesByCooperationID) {
+            ResponseGarageDTO dto = new ResponseGarageDTO();
+            BeanUtils.copyProperties(garage, dto);
+            response.add(dto);
+        }
+        return response;
+
+    }
 }

@@ -23,6 +23,12 @@ public class ParkingPlacesController {
         List<ResponseParkingPlaceDTO> response = parkingPlacesService.getAllParkingPlacesByCooperationID(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @GetMapping("/is-free/{id}")
+    public ResponseEntity<List<ResponseParkingPlaceDTO>> getAllFreeParkingPlacesByCooperationID(@PathVariable long id) {
+
+        List<ResponseParkingPlaceDTO> response = parkingPlacesService.getAllFreeParkingPlacesByCooperationID(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     @PutMapping("/update")
     public ResponseEntity<ResponseParkingPlaceDTO> updateParkingPlace(@RequestBody UpdateParkingPlaceDTO updateParkingPlaceDTO) {

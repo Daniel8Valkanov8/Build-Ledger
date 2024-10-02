@@ -27,6 +27,12 @@ public class ApartmentController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("is-free/{id}")
+    public ResponseEntity<List<ResponseApartmentDTO>> getAllFreeApartmentsByCooperationID(@PathVariable long id) {
+        System.out.println("Fetching apartments for cooperation ID: " + id);
+        List<ResponseApartmentDTO> response = apartmentService.getAllFreeApartmentsByCooperationID(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     @PutMapping("/update")
     public ResponseEntity<ResponseApartmentDTO> updateApartment(@RequestBody UpdateApartmentDTO updateApartmentDTO) {
         ResponseApartmentDTO response = apartmentService.updateApartment(updateApartmentDTO);

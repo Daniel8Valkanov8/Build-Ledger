@@ -13,4 +13,9 @@ public interface ParkingPlaceRepository extends JpaRepository<ParkingPlace, Long
 
     @Query("SELECT p FROM ParkingPlace p WHERE p.cooperation.id = :cooperationID")
     List<ParkingPlace> getAllParkingPlacesByCooperationID(@Param("cooperationID") long cooperationID);
+
+
+    @Query("SELECT p FROM ParkingPlace p WHERE p.cooperation.id = :cooperationID AND p.sold = false")
+    List<ParkingPlace> getAllFreeParkingPlacesByCooperationID(@Param("cooperationID") long id);
+
 }
