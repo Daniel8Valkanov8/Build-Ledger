@@ -16,7 +16,29 @@ const AllFloors = () => {
             try {
                 const response = await axios.get(`http://localhost:8080/floors/${id}`);
                 console.log(response);
-                setFloors(response.data);
+
+                // Сортираме етажите
+                const sortedFloors = response.data.sort((a, b) => {
+                    const numA = parseInt(a.number);
+                    const numB = parseInt(b.number);
+
+                    // Подреждаме по големина - първо надземните, после 0, след това подземните
+                    if (numA < 0 && numB < 0) {
+                        return numA - numB; // Подреждаме подземните по възходящ ред
+                    } else if (numA < 0) {
+                        return 1; // Подземните отиват най-отзад
+                    } else if (numB < 0) {
+                        return -1; // Подземните отиват най-отзад
+                    } else if (numA === 0) {
+                        return 1; // Етаж 0 е най-накрая от надземните
+                    } else if (numB === 0) {
+                        return -1; // Етаж 0 е най-накрая от надземните
+                    } else {
+                        return numB - numA; // Надземните подреждаме по низходящ ред
+                    }
+                });
+
+                setFloors(sortedFloors);
             } catch (err) {
                 console.error(err);
                 setError('Failed to fetch floors.');
@@ -26,7 +48,7 @@ const AllFloors = () => {
         fetchFloors();
     }, [id]);
 
-    // Функция за добавяне на нов апартамент
+    // Функция за добавяне на нов етаж
     const handleAddFloor = () => {
         navigate(`/floor/add/${id}`);
     };
@@ -43,7 +65,7 @@ const AllFloors = () => {
                         projectTitle={`Cooperation ${id}`}
                     />
                 ))}
-                {/* Кутийка за добавяне на нов апартамент */}
+                {/* Кутийка за добавяне на нов етаж */}
                 <div 
                     className="project-card add-apartment-card"
                     onClick={handleAddFloor} 

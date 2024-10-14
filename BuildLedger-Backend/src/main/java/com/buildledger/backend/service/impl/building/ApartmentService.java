@@ -92,7 +92,7 @@ public class ApartmentService {
         if(savedApartment.getFloor()!=null) {
             responseApartmentDTO.setFloorId(savedApartment.getFloor().getId());
         }
-        
+
     }
 
     public List<ResponseApartmentDTO> getAllFreeApartmentsByCooperationID(long id) {

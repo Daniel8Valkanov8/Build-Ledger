@@ -37,17 +37,17 @@ public class IntermediateController {
         cooperationService.addEntryToCooperation(createIntermediateDTO);
         response.add(new ResponseMessageDTO("Entrance added successfully"));
         //todo print
-        //parkingPlaceService.createParkingPlaceByCount(createIntermediateDTO);
+        parkingPlaceService.createParkingPlaceByCount(createIntermediateDTO);
         response.add(new ResponseMessageDTO("Parking place created successfully"));
         //Floor creation in cooperation
-        //floorService.createFloorByCount(createIntermediateDTO);
+        floorService.createFloorByCount(createIntermediateDTO);
         response.add(new ResponseMessageDTO("Floor created successfully"));
-        //floorService.createUndergroundFloor(createIntermediateDTO);
+        floorService.createUndergroundFloor(createIntermediateDTO);
         response.add(new ResponseMessageDTO("Underground floor created successfully"));
-        //apartmentService.createApartmentByCount(createIntermediateDTO);
+        apartmentService.createApartmentByCount(createIntermediateDTO);
         response.add(new ResponseMessageDTO("Apartment created successfully"));
 
-        //garageService.createGarageByCount(createIntermediateDTO);
+        garageService.createGarageByCount(createIntermediateDTO);
         response.add(new ResponseMessageDTO("Garage created successfully"));
         System.out.println(createIntermediateDTO.toString());
         return new ResponseEntity<>(response, HttpStatus.OK);

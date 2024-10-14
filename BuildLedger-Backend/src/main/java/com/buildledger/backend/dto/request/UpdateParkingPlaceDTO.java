@@ -13,4 +13,6 @@ public class UpdateParkingPlaceDTO {
 
     private long id;
     private String number;
+    private double priceEur;
+    private long floorId;
 }

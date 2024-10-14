@@ -13,5 +13,6 @@ public class UpdateGarageDTO {
 
     private long id;
     private int garage;
-
+    private double price;
+    private long floorId;
 }

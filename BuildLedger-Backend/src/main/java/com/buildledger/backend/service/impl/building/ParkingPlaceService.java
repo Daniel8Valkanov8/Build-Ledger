@@ -77,8 +77,9 @@ public class ParkingPlaceService {
     public ResponseParkingPlaceDTO updateParkingPlace(UpdateParkingPlaceDTO updateParkingPlaceDTO) {
         Optional<ParkingPlace> parkingPlace = parkingPlaceRepository.findById(updateParkingPlaceDTO.getId());
         if (parkingPlace.isPresent()) {
-            BeanUtils.copyProperties(updateParkingPlaceDTO, parkingPlace.get());
-            parkingPlaceRepository.save(parkingPlace.get());
+            ParkingPlace parkingPlace1 = parkingPlace.get();
+            parkingPlace1.setPriceEur(updateParkingPlaceDTO.getPriceEur());
+            parkingPlaceRepository.saveAllAndFlush(List.of(parkingPlace1));
             return getParkingPlaceByID(updateParkingPlaceDTO.getId());
         } else {
             throw new IllegalArgumentException("ParkingPlace with ID " + updateParkingPlaceDTO.getId() + " not found.");
