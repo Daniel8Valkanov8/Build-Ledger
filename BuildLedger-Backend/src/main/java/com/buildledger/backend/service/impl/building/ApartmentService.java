@@ -54,7 +54,8 @@ public class ApartmentService {
         for (Apartment apartment : response) {
         ResponseApartmentDTO dto = new ResponseApartmentDTO();
         BeanUtils.copyProperties(apartment, dto);
-        responseDTO.add(dto);
+            setFloorIdCatchNull(dto, apartment);
+            responseDTO.add(dto);
         }
     return responseDTO;
     }
@@ -63,6 +64,7 @@ public class ApartmentService {
         if (apartment.isPresent()) {
             ResponseApartmentDTO responseApartmentDTO = new ResponseApartmentDTO();
             BeanUtils.copyProperties(apartment.get(), responseApartmentDTO);
+            setFloorIdCatchNull(responseApartmentDTO, apartment.get());
             return responseApartmentDTO;
         } else {
             throw new IllegalArgumentException("Apartment with ID " + id + " not found.");
@@ -76,11 +78,21 @@ public class ApartmentService {
            apartment1.setArea(updateApartmentDTO.getArea());
             Floor floor = floorRepository.findById(updateApartmentDTO.getFloorId()).get();
            apartment1.setFloor(floor);
+           apartment1.setPriceEur(updateApartmentDTO.getPriceEur());
            apartment1.setBedroomCount(updateApartmentDTO.getBedroomCount());
            apartment1.setBathroomCount(updateApartmentDTO.getBathroomCount());
-           apartmentRepository.saveAndFlush(apartment1);
+           Apartment savedApartment = apartmentRepository.saveAndFlush(apartment1);
+            BeanUtils.copyProperties(savedApartment, responseApartmentDTO);
+            setFloorIdCatchNull(responseApartmentDTO, savedApartment);
         }
         return responseApartmentDTO;
+    }
+
+    private static void setFloorIdCatchNull(ResponseApartmentDTO responseApartmentDTO, Apartment savedApartment) {
+        if(savedApartment.getFloor()!=null) {
+            responseApartmentDTO.setFloorId(savedApartment.getFloor().getId());
+        }
+        
     }
 
     public List<ResponseApartmentDTO> getAllFreeApartmentsByCooperationID(long id) {
@@ -89,6 +101,7 @@ public class ApartmentService {
         for (Apartment apartment : response) {
             ResponseApartmentDTO dto = new ResponseApartmentDTO();
             BeanUtils.copyProperties(apartment, dto);
+            setFloorIdCatchNull(dto, apartment);
             responseDTO.add(dto);
         }
         return responseDTO;

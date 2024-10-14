@@ -49,16 +49,23 @@ const AllApartments = () => {
             <h1>Apartments in Cooperation {id}</h1>
             {error && <p className="text-danger">{error}</p>}
             <div className="apartment-container">
-                {apartments.map(apartment => (
-                    <ApartmentComponent
-                        key={apartment.id}
-                        apartment={apartment}
-                        projectTitle={`Cooperation ${id}`}
-                        onAddApartment={() => handleAddApartment(apartment)}
-                    />
-                ))}
+                {apartments.map(apartment => {
+                    // Намираме съответния етаж по `floorId`
+                    const floor = floors.find(floor => floor.id === apartment.floorId);
+                    const floorNumber = floor ? floor.number : 'Unknown'; // Показваме номера на етажа или 'Unknown', ако няма етаж
+    
+                    return (
+                        <ApartmentComponent
+                            key={apartment.id}
+                            apartment={apartment}
+                            projectTitle={`Cooperation ${id}`}
+                            floorNumber={floorNumber} // Предаваме номера на етажа
+                            onAddApartment={() => handleAddApartment(apartment)}
+                        />
+                    );
+                })}
             </div>
-
+    
             {selectedApartment && (
                 <UpdateApartment
                     show={!!selectedApartment}

@@ -16,6 +16,7 @@ public class ResponseApartmentDTO {
     private double balconyArea;
     private double priceLv;
     private double priceEur;
+    private long floorId;
     private boolean sold;
     private String description;
     private int bedroomCount;

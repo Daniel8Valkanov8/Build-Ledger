@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../all-projects/project-component/Projects.css';
 import './Component.css';
 
-const ApartmentComponent = ({ apartment, projectTitle, onAddApartment }) => {
+const ApartmentComponent = ({ apartment, projectTitle, onAddApartment, floorNumber }) => {
     const navigate = useNavigate();
 
     const handleViewDetails = () => {
@@ -19,7 +19,7 @@ const ApartmentComponent = ({ apartment, projectTitle, onAddApartment }) => {
             <div className="project-info" onClick={handleViewDetails}>
                 <h2>{apartment.number}</h2>
                 <p><strong>Area: </strong> {apartment.area} m²</p>
-                <p><strong>Floor: </strong> {apartment.floor}</p>
+                <p><strong>Floor: </strong> {floorNumber} {/* Показваме номера на етажа тук */}</p>
                 <p><strong>Price: </strong> {apartment.priceEur} €</p>
                 <p><strong>Status: </strong> {apartment.sold ? 'Sold' : 'Free'}</p>
             </div>

@@ -18,5 +18,6 @@ public class UpdateApartmentDTO {
     private int bedroomCount;
     private int bathroomCount;
     private long floorId;
+    private double priceEur;
 
 }
