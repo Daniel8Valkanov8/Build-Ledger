@@ -73,14 +73,43 @@ public class FloorService {
     public List<ResponseFloorDTO> getAllFloorsByCooperationID(long id) {
         Optional<Cooperation> cooperationOpt = cooperationRepository.findById(id);
         List<ResponseFloorDTO> response = null;
-        if (cooperationOpt.isPresent()) {
-            response=cooperationOpt.get().getFloors().stream().map(floor -> new ResponseFloorDTO(floor.getId(),floor.getNumber())).toList();
 
+        if (cooperationOpt.isPresent()) {
+            response = cooperationOpt.get()
+                    .getFloors()
+                    .stream()
+                    .map(floor -> new ResponseFloorDTO(floor.getId(), floor.getNumber()))
+                    .sorted((floor1, floor2) -> {
+                        int num1 = Integer.parseInt(floor1.getNumber());
+                        int num2 = Integer.parseInt(floor2.getNumber());
+
+                        // Сортираме подземните етажи последни
+                        if (num1 < 0 && num2 < 0) {
+                            return Integer.compare(num1, num2); // Подреждаме подземните във възходящ ред
+                        } else if (num1 < 0) {
+                            return 1; // Подземните етажи отиват най-накрая
+                        } else if (num2 < 0) {
+                            return -1; // Подземните етажи отиват най-накрая
+                        }
+
+                        // Подреждаме етаж 0 последен от надземните
+                        if (num1 == 0) {
+                            return 1;
+                        } else if (num2 == 0) {
+                            return -1;
+                        }
+
+                        // Подреждаме надземните етажи в низходящ ред
+                        return Integer.compare(num2, num1);
+                    })
+                    .toList();
         } else {
             throw new IllegalArgumentException("Cooperation with ID " + id + " not found.");
         }
+
         return response;
     }
+
 
     public ResponseFloorDTO getFloorByFloorNumber( long floorId) {
         Optional<Floor> floorOpt = floorRepository.findById(floorId);

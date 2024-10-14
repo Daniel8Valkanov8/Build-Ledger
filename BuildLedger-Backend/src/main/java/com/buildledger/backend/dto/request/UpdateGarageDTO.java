@@ -12,7 +12,6 @@ import lombok.Setter;
 public class UpdateGarageDTO {
 
     private long id;
-    private int garage;
-    private double price;
+    private double priceEur;
     private long floorId;
 }

@@ -8,44 +8,41 @@ import UpdateGarage from './UpdateGarage';
 const AllGarages = () => {
     const { id } = useParams();
     const [garages, setGarages] = useState([]);
-    const [floors, setFloors] = useState([]); 
+    const [floors, setFloors] = useState([]);
     const [selectedGarage, setSelectedGarage] = useState(null);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const fetchGaragesAndFloors = async () => {
-        console.log(`Fetching garages and floors for cooperation ${id}`);
+        console.log('Refreshing garages and floors...');  // Проверка дали функцията се извиква
         try {
-            const [apartmentsResponse, floorsResponse] = await Promise.all([
+            const [garagesResponse, floorsResponse] = await Promise.all([
                 axios.get(`http://localhost:8080/garages/${id}`),
                 axios.get(`http://localhost:8080/floors/${id}`)
             ]);
-
-            setGarages(apartmentsResponse.data);
+    
+            setGarages(garagesResponse.data);
             setFloors(floorsResponse.data);
-            console.log("Garages:", apartmentsResponse.data);
-            console.log("Floors:", floorsResponse.data);
+            console.log("Garages after update:", garagesResponse.data);  // Проверка на новите данни
         } catch (err) {
             console.error(err);
             setError('Failed to fetch garages and floors.');
         }
     };
+    
 
     useEffect(() => {
         fetchGaragesAndFloors();
     }, [id]);
 
-    // Функция за добавяне на нов гараж към модала
     const handleAddGarage = (garage) => {
         setSelectedGarage(garage);
     };
 
-    // Затваряне на модала
     const handleCloseModal = () => {
         setSelectedGarage(null);
     };
 
-    // Навигация към добавяне на нов гараж
     const handleAddApartment = () => {
         navigate(`/garage/add/${id}`);
     };
@@ -60,11 +57,11 @@ const AllGarages = () => {
                         key={garage.id}
                         garage={garage}
                         projectTitle={`Cooperation ${id}`}
-                        onAddGarage={() => handleAddGarage(garage)} // Подаваме правилната функция onAddGarage
+                        onAddGarage={() => handleAddGarage(garage)}
+                        floors={floors}  // Подаваме списъка с етажи към GarageComponent
                     />
                 ))}
 
-                {/* Бутон за добавяне на нов гараж чрез SVG */}
                 <div 
                     className="project-card add-apartment-card"
                     onClick={handleAddApartment} 
@@ -76,7 +73,6 @@ const AllGarages = () => {
                 </div>
             </div>
 
-            {/* Модал за актуализиране на гараж */}
             {selectedGarage && (
                 <UpdateGarage
                     show={!!selectedGarage}
@@ -85,7 +81,7 @@ const AllGarages = () => {
                     cooperationNumber={id}
                     floors={floors}
                     garageId={selectedGarage.id}
-                    refreshGarage={fetchGaragesAndFloors} // Предаваме функцията за презареждане
+                    refreshGarages={fetchGaragesAndFloors}  // Предаваме правилната функция за презареждане
                 />
             )}
         </div>

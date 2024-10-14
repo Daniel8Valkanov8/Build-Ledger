@@ -13,7 +13,7 @@ public class ResponseGarageDTO {
 
     private long id;
     private String number;
-    private boolean status;
-    private double price;
+    private boolean isSold;
+    private double priceEur;
     private long floorId;
 }

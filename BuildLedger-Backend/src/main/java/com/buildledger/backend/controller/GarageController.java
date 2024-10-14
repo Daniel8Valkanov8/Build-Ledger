@@ -39,8 +39,9 @@ public class GarageController {
 
     @PutMapping("/update")
     public ResponseEntity<ResponseGarageDTO> updateGarage(@Valid @RequestBody UpdateGarageDTO updateGarageDTO) {
-        System.out.println("Updating garage" + updateGarageDTO.getId());
+        System.out.println("Updating garage: " + updateGarageDTO.getId() + " with price: " + updateGarageDTO.getPriceEur());
         ResponseGarageDTO response = garageService.updateGarage(updateGarageDTO);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 }

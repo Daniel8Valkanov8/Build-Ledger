@@ -11,7 +11,7 @@ const UpdateGarage = ({ show, handleClose, cooperationNumber, garageNumber, floo
         // Намиране на избрания етаж по ID
         const selectedFloor = floors.find(floor => floor.id === parseInt(floorId)); 
         
-        // Проверка дали етажът е надземен (номерът му е по-голям от 0)
+        // Проверка дали етажът е надземен (номерът му е по-голям от 3)
         if (selectedFloor && parseInt(selectedFloor.number) > 3) { 
             setErrorMessage('Гаражът не може да се намира на надземен етаж.');
             return;
@@ -21,18 +21,21 @@ const UpdateGarage = ({ show, handleClose, cooperationNumber, garageNumber, floo
         const updateData = {
             id: garageId,
             priceEur: parseFloat(price),  // Преобразуваме стойността в число
-            floorID: floorId || null,
+            floorId : floorId || null,
         };
     
         try {
             const response = await axios.put(`http://localhost:8080/garages/update`, updateData);
             console.log(response.data);
+            
+            // Затваряне на модала и презареждане на данните
             handleClose(); 
-            refreshGarages(); 
+            refreshGarages(); // Презареждаме гаражите след успешно обновяване
         } catch (error) {
             console.error("Error updating garage:", error);
         }
     };
+    
     
     return (
         <div className={`modal ${show ? 'show' : ''}`} 
