@@ -39,7 +39,7 @@ const UpdateApartment = ({ show, handleClose, apartmentNumber, cooperationNumber
             <div className="modal-dialog modal-dialog-centered" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">{apartmentNumber} in Cooperation {cooperationNumber}</h5>
+                        <h5 className="modal-title">{apartmentNumber} </h5>
                     </div>
                     <div className="modal-body">
                         <div className="form-group">

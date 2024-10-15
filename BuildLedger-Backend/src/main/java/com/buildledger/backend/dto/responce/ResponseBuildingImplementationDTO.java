@@ -18,12 +18,12 @@ public class ResponseBuildingImplementationDTO {
     private String title;
     private String description;
     private double rsp;  // retail selling price
-    private int garageCount;
-    private int parkingPlaceCount;
-    private int floorCount;
+    private int entranceCount;
     private Set<Stage> stages;
-    private int undergroundFloorCount;
-    private int apartmentCount;
+
     private  String Type; ;
-    private Set<Floor> floors;
+
+    public ResponseBuildingImplementationDTO(String title) {
+        this.title = title;
+    }
 }

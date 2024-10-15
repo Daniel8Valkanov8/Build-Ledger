@@ -17,8 +17,6 @@ import java.util.Set;
 @Table(name = "cooperations")
 public class Cooperation extends Building {
 
-    private int undergroundFloorCount;
-    private int apartmentCount;
     private final String TYPE = "Cooperation";
 
 

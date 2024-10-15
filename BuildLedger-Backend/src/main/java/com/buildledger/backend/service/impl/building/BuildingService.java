@@ -1,7 +1,9 @@
 package com.buildledger.backend.service.impl.building;
 
+import com.buildledger.backend.dto.request.UpdateCooperationDTO;
 import com.buildledger.backend.dto.responce.ResponseBuildingDTO;
 import com.buildledger.backend.dto.responce.ResponseBuildingImplementationDTO;
+import com.buildledger.backend.enums.Stage;
 import com.buildledger.backend.model.building.Building;
 import com.buildledger.backend.model.building.Cooperation;
 import com.buildledger.backend.model.building.House;
@@ -67,11 +69,36 @@ public class BuildingService {
         // Ако не е намерен нито един тип сграда, връщаме празен обект или хвърляме изключение
         return new ResponseBuildingImplementationDTO();
     }
+    public ResponseBuildingImplementationDTO updateCooperation(UpdateCooperationDTO updateCooperationDTO) {
+         Optional<Cooperation> cooperation = cooperationRepository.findById(updateCooperationDTO.getId());
 
+        if (cooperation.isPresent()) {
+            if(updateCooperationDTO.getDescription() != null) {
+                cooperation.get().setDescription(updateCooperationDTO.getDescription());
+            }
+            if (updateCooperationDTO.getRsp() != 0) cooperation.get().setRsp(updateCooperationDTO.getRsp());
+
+            if(updateCooperationDTO.getStage() != null) {
+                switch (updateCooperationDTO.getStage()) {
+                    case "AKT14" -> cooperation.get().getStages().add(Stage.AKT14);
+                    case "AKT15" -> cooperation.get().getStages().add(Stage.AKT15);
+                    case "AKT16" -> cooperation.get().getStages().add(Stage.AKT16);
+                }
+
+            }
+            cooperationRepository.save(cooperation.get());
+            return convertFromCooperation(cooperation.get());
+        }
+        return new ResponseBuildingImplementationDTO("Cooperation not found");
+    }
     private ResponseBuildingImplementationDTO convertFromCooperation(Cooperation cooperation) {
         ResponseBuildingImplementationDTO cooperationDTO = new ResponseBuildingImplementationDTO();
         cooperationDTO.setTitle(cooperation.getTitle());
         cooperationDTO.setType("Cooperation");
+        cooperationDTO.setDescription(cooperation.getDescription());
+        cooperationDTO.setEntranceCount(cooperation.getEntranceCount());
+        cooperationDTO.setRsp(cooperation.getRsp());
+        cooperationDTO.setStages(cooperation.getStages());
         // Установяваме типа като "Cooperation"
         cooperationDTO.setId(cooperation.getId());
         return cooperationDTO;

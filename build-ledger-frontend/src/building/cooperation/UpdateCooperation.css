@@ -1,0 +1,15 @@
+/* Премахваме стрелките за input от тип number */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
+input[type=number] {
+    -moz-appearance: textfield; /* За Firefox */
+}
+
+/* Удължаваме textarea за описанието */
+textarea {
+    resize: none; /* Забраняваме ръчната промяна на размера, ако е необходимо */
+}

@@ -1,8 +1,10 @@
 package com.buildledger.backend.controller;
 
+import com.buildledger.backend.dto.request.UpdateCooperationDTO;
 import com.buildledger.backend.dto.responce.ResponseBuildingDTO;
 import com.buildledger.backend.dto.responce.ResponseBuildingImplementationDTO;
 import com.buildledger.backend.service.impl.building.BuildingService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +42,15 @@ public class BuildingController {
         return new ResponseEntity<>(building, HttpStatus.OK);
     }
 
-
+    @PutMapping("/update/cooperation")
+    public ResponseEntity<?> updateCooperation(@Valid @RequestBody UpdateCooperationDTO updateCooperationDTO) {
+        try {
+            ResponseBuildingImplementationDTO updatedBuilding = buildingService.updateCooperation(updateCooperationDTO);
+            return new ResponseEntity<>(updatedBuilding, HttpStatus.OK);
+        } catch (Exception e) {
+            // Обработване на грешката, например ако има дублиращи се етапи
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
 

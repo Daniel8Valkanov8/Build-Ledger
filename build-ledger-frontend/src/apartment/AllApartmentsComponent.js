@@ -46,7 +46,7 @@ const AllApartments = () => {
 
     return (
         <div>
-            <h1>Apartments in Cooperation {id}</h1>
+            <h1>Apartments</h1>
             {error && <p className="text-danger">{error}</p>}
             <div className="apartment-container">
                 {apartments.map(apartment => {

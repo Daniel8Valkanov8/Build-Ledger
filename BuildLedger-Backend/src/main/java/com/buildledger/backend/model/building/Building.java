@@ -20,13 +20,10 @@ public abstract class Building {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
     private String title;
     private String description;
     private double rsp;  // retail selling price
-    private int garageCount;
-    private int parkingPlaceCount;
-    private int floorCount;
     private int entranceCount = 1;
 
     @ElementCollection(targetClass = Stage.class)

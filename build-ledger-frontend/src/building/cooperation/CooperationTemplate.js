@@ -1,85 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import CooperationNavbar from '../../navigation/CooperationNavbar';
+
+import UpdateCooperation from './UpdateCooperation'; // Импортираме модала
 
 const CooperationTemplate = () => {
     const location = useLocation();
-    const { projectTitle, building } = location.state || {
+    const { projectTitle, building: initialBuilding } = location.state || {
         projectTitle: "Unknown Project", 
         building: { title: "Unknown Cooperation" }
     };
 
-    const [formData, setFormData] = useState({
-        id: building.id,  // добавяме ID-то на кооперацията
-        entrance: '',
-        floor: '',
-        apartment: '',
-        undergroundFloor: '',
-        garage: '',
-        parkingPlaces: ''  // добавяме поле за паркомясто
-    });
-    const [errors, setErrors] = useState({});
+    const [building, setBuilding] = useState(initialBuilding); // Състояние за кооперацията
+    const [showModal, setShowModal] = useState(false); // Състояние за показване на модала
     const [success, setSuccess] = useState(null);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
-
-    const validateForm = () => {
-        const newErrors = {};
-        if (!formData.entrance) newErrors.entrance = 'Entrance Count is required';
-        if (!formData.floor) newErrors.floor = 'Floor Count is required';
-        if (!formData.apartment) newErrors.apartment = 'Apartment Count is required';
-        if (!formData.undergroundFloor) newErrors.undergroundFloor = 'Underground Floor Count is required';
-        if (!formData.garage) newErrors.garage = 'Garage Count is required';
-        if (!formData.parkingPlaces) newErrors.parkingPlaces = 'Parking Place Count is required';
-
-        return newErrors;
-    };
-
-    const createBuilding = async (e) => {
-        e.preventDefault();
-
-        const newErrors = validateForm();
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-        } else {
-            try {
-                const response = await axios.post('http://localhost:8080/quick-create', formData);
-                console.log('Building created successfully:', response.data);
-                setSuccess('Project created successfully!');
-                setErrors({});
-
-                setFormData({
-                    id: building.id,
-                    entrance: '',
-                    floor: '',
-                    apartment: '',
-                    undergroundFloor: '',
-                    garage: '',
-                    parkingPlaces: ''  // нулираме и новото поле
-                });
-            } catch (error) {
-                console.error('Error creating building:', error);
-                setSuccess(null);
-            }
+    // Функция за презареждане на кооперацията след обновяване
+    const refreshCooperation = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/buildings/${building.id}`);
+            setBuilding(response.data); // Актуализираме данните на кооперацията
+        } catch (error) {
+            console.error('Error refreshing cooperation:', error);
         }
+    };
+
+    const handleAddInformation = () => {
+        setShowModal(true); // Отваряме модала при натискане на бутона
     };
 
     return (
         <div>
-            <h1>{building.title} in {projectTitle}</h1>
+            <h1>{building.title} in {projectTitle}
+                <div 
+                    className="add-apartment-button" 
+                    onClick={handleAddInformation} // Свързваме бутона с функцията
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" className="bi bi-plus" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                    </svg>
+                </div>
+            </h1>
             <div className="buildings-container">
                 <div>Description: {building.description}</div>
                 <div>Rsp: {building.rsp}</div>
-                <div>Stages: {building.stages}  Example: AKT 14, AKT 15</div>
+                <div>Entrance count: {building.entranceCount} </div>
             </div>
             
+            <UpdateCooperation 
+                show={showModal} 
+                handleClose={() => setShowModal(false)} // Функция за затваряне на модала
+                cooperationId={building.id} 
+                refreshCooperation={refreshCooperation} // Предаваме функцията за рефреш
+            />
         </div>
     );
 };
