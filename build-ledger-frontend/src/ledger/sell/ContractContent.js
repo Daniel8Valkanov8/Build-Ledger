@@ -7,7 +7,7 @@ const ContractContent = ({ formData, handleInputChange, handleFileClick, handleF
             <div className="contract-container">
                 {success && <div className="alert alert-success">{success}</div>}
                 <div className="form-group contract-file-group">
-                    <label htmlFor="contractNumber">Contract Number</label>
+                    <label htmlFor="contractNumber">Import Contract</label>
                     <div className="input-file-container">
                         <div className="file-icon" onClick={handleFileClick}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-file-earmark-plus" viewBox="0 0 16 16">
@@ -15,15 +15,7 @@ const ContractContent = ({ formData, handleInputChange, handleFileClick, handleF
                                 <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
                             </svg>
                         </div>
-                        <input
-                            type="text"
-                            className="form-control no-spinner contract-input"
-                            id="contractNumber"
-                            name="contractNumber"
-                            placeholder="№"
-                            value={formData.contractNumber || ''}
-                            onChange={handleInputChange}
-                        />
+                        
                     </div>
                 </div> 
                 <input 

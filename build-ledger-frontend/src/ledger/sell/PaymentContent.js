@@ -55,6 +55,18 @@ const PaymentContent = ({ formData, handleInputChange, paymentSchemas, success }
                     />
                 </div>
             </div>
+            <div className="broker-container">
+            <div className="form-group">
+                            <label htmlFor="description">Notes</label>
+                            <textarea
+                                className="form-control"
+                                id="description"
+                                rows="5"
+                                
+                                placeholder="Add description to this sell"
+                            />
+                        </div>
+         </div>
         </div>
     );
 };

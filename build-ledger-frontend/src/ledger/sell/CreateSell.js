@@ -4,10 +4,12 @@ import './CreateSell.css';
 import axios from 'axios';
 import ContractContent from './ContractContent';
 import ObjectsPriceContent from './ObjectsPriceContent';
-import PaymentContent from './PaymentContent'; // Импортираме компонента
+import PaymentContent from './PaymentContent';
+import AllApartmentsForSaleModal from './modals/ApartmentsModal'; // Import the modal
 
 const CreateSell = () => {
     const { id } = useParams();
+    const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
     const [formData, setFormData] = useState({
         id: id,
@@ -24,24 +26,40 @@ const CreateSell = () => {
         undergroundFloor: '',
         garage: '',
         parkingPlace: '',
-        paymentSchemaId: '',   // Добавяме поле за Payment Schema
-        installments: '',       // Поле за вноски
-        installmentDates: ''    // Поле за дати на вноските
+        paymentSchemaId: '',
+        installments: '',
+        installmentDates: ''
     });
-    
-    const [paymentSchemas, setPaymentSchemas] = useState([]); 
-    const [success, setSuccess] = useState(null);
 
+    const [paymentSchemas, setPaymentSchemas] = useState([]); 
+    const [apartments, setApartments] = useState([]);
+    const [garages, setGarages] = useState([]);
+    const [parkingPlaces, setParkingPlaces] = useState([]);
+    const [success, setSuccess] = useState(null);
+ 
+    const handleApartmentSelect = (apartmentNumber) => {
+        setFormData({ ...formData, apartment: apartmentNumber }); // Set the apartment number in formData
+        // Optional: You can add the apartment to a list here too if needed
+    };
     useEffect(() => {
-        const fetchPaymentSchemas = async () => {
+        const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/payment-schema');
-                setPaymentSchemas(response.data);
+                const paymentSchemasResponse = await axios.get('http://localhost:8080/payment-schema');
+                setPaymentSchemas(paymentSchemasResponse.data);
+
+                const apartmentsResponse = await axios.get(`http://localhost:8080/apartments/${id}`);
+                setApartments(apartmentsResponse.data);
+
+                const garagesResponse = await axios.get(`http://localhost:8080/garages/${id}`);
+                setGarages(garagesResponse.data);
+
+                const parkingPlacesResponse = await axios.get(`http://localhost:8080/parking-places/${id}`);
+                setParkingPlaces(parkingPlacesResponse.data);
             } catch (error) {
-                console.error('Error fetching payment schemas:', error);
+                console.error('Error fetching data:', error);
             }
         };
-        fetchPaymentSchemas();
+        fetchData();
     }, [id]);
 
     const handleFileChange = (e) => {
@@ -64,13 +82,19 @@ const CreateSell = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form Data:', formData);
-        // Тук ще използваш данните за подаване на заявка
+    };
+
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
     };
 
     return (
         <div className="create-sell-container">
             <h1>Create Sell</h1>
-
             <form onSubmit={handleSubmit}>
                 <ContractContent 
                     formData={formData}
@@ -84,13 +108,16 @@ const CreateSell = () => {
                     formData={formData}
                     handleInputChange={handleInputChange}
                     success={success}
+                    apartments={apartments} 
+                    garages={garages} 
+                    parkingPlaces={parkingPlaces} 
+                    onApartmentClick={handleOpenModal} // Pass the function to open the modal
                 />
 
-                {/* Прехвърляме paymentSchemas и handleInputChange на PaymentContent */}
                 <PaymentContent
                     formData={formData}
                     handleInputChange={handleInputChange}
-                    paymentSchemas={paymentSchemas}  // Прехвърляме данните от API
+                    paymentSchemas={paymentSchemas}
                     success={success}
                 />
 
@@ -98,9 +125,16 @@ const CreateSell = () => {
                     Create Sell
                 </button>
             </form>
+
+            {/* Modal Component */}
+            <AllApartmentsForSaleModal 
+                show={showModal} 
+                handleClose={handleCloseModal} 
+                apartments={apartments} 
+                onApartmentSelect={handleApartmentSelect} // Pass select function to modal
+            />
         </div>
     );
 };
 
 export default CreateSell;
-;

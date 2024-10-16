@@ -1,0 +1,21 @@
+
+.added-objects-container {
+    width: 100%;
+    max-width: 500px; /* Може да промениш размера според нуждите ти */
+    height: 150px;
+    background-color: #f0f0f0; /* Светло сив цвят на полето */
+    border: 1px solid #ccc; /* Граница около полето */
+    border-radius: 10px; /* Заоблени ръбове */
+    overflow-x: auto; /* Хоризонтален скролер */
+    display: flex;
+    padding: 10px;
+    margin-top: 20px; /* Може да коригираш стойността, за да регулираш разстоянието спрямо другите елементи */
+    box-sizing: border-box;
+}
+
+.added-objects-list {
+    display: flex;
+    flex-direction: row;
+    gap: 15px; /* Разстояние между добавените обекти */
+}
+

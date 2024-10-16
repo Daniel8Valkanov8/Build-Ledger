@@ -16,11 +16,10 @@ public class Apartment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private String number;
-    private double area;
-    private double priceLv;
     private double priceEur;
+
+    private double area;
     private boolean sold;
     private String description;
     private int bedroomCount;

@@ -1,0 +1,70 @@
+/* CooperationTemplate.css */
+
+/* Контейнер за цялата информация */
+.cooperation-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Стилове за заглавието */
+.cooperation-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Оформление за отделните полета с информация */
+.buildings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.buildings-container div {
+    font-size: 18px;
+    color: #34495e;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Добавяне на стил за бутона за добавяне на апартаменти */
+.add-apartment-button {
+    background-color: #3498db;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.add-apartment-button:hover {
+    background-color: #2980b9;
+}
+
+/* SVG икона стилове */
+.add-apartment-button svg {
+    fill: white;
+    width: 24px;
+    height: 24px;
+}
+
+/* Стил за успех или грешки */
+.success-message {
+    color: green;
+    font-size: 16px;
+}
+
+.error-message {
+    color: red;
+    font-size: 16px;
+}

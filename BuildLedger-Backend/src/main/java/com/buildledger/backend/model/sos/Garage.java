@@ -17,7 +17,6 @@ public class Garage {
     private long id;
 
     private String number;
-    private double priceLv;
     private double priceEur;
     private boolean sold;
     private String description;

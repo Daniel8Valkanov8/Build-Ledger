@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import UpdateCooperation from './UpdateCooperation'; // Импортираме модала
+import './CooperationTemplate.css'; // Импортираме CSS файла
 
 const CooperationTemplate = () => {
     const location = useLocation();
@@ -30,8 +31,9 @@ const CooperationTemplate = () => {
     };
 
     return (
-        <div>
-            <h1>{building.title} in {projectTitle}
+        <div className="cooperation-container">
+            <div className="cooperation-title">
+                <h1>{building.title} in {projectTitle}</h1>
                 <div 
                     className="add-apartment-button" 
                     onClick={handleAddInformation} // Свързваме бутона с функцията
@@ -40,10 +42,11 @@ const CooperationTemplate = () => {
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                     </svg>
                 </div>
-            </h1>
+            </div>
+
             <div className="buildings-container">
                 <div>Description: {building.description}</div>
-                <div>Rsp: {building.rsp}</div>
+                <div>Rsp: {building.rsp} m2</div>
                 <div>Entrance count: {building.entranceCount} </div>
             </div>
             
