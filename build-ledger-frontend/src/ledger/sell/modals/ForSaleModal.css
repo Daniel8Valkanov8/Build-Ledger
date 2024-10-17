@@ -65,3 +65,21 @@
     color: #28a745;
     font-weight: bold;
 }
+/* Унифицирай правилата за гаражи и апартаменти */
+.item-number {
+    margin-right: auto; /* Оставя цената да бъде в дясно */
+}
+
+.item-price {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Останалата част от стила за всички елементи (независимо дали са апартаменти или гаражи) */
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
