@@ -81,7 +81,7 @@ const PaymentContent = ({ formData, handleInputChange, paymentSchemas, success, 
                             onChange={(e) => handleInstallmentChange(index, e.target.value)}
                         />
                         <div className="form-group">
-                            <label htmlFor={`installmentDate${index + 1}`}></label>
+                            <label htmlFor={`installmentDate${index + 1}`}>Installment Date</label>
                             <DatePicker
                                 selected={formData[`installmentDate${index + 1}`]}
                                 onChange={(date) => handleDateChange(date, `installmentDate${index + 1}`)}
