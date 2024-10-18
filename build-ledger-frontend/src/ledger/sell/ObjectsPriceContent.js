@@ -5,6 +5,9 @@ const ObjectsPriceContent = ({ formData, handleInputChange, success, onApartment
     const [totalPrice, setTotalPrice] = useState(0); // Държим общата цена
     const [manualPrice, setManualPrice] = useState(null); // Съхраняваме ръчно въведената цена
     const [inputPrice, setInputPrice] = useState(''); // Държим текущото съдържание на полето
+    const [discount, setDiscount] = useState(0); // Нов state за отстъпката
+    const [brokerPercent, setBrokerPercent] = useState(''); // Комисионна в проценти
+    const [brokerProfit, setBrokerProfit] = useState(''); // Комисионна в евро
 
     useEffect(() => {
         // Изчисляваме общата цена на базата на добавените обекти
@@ -17,26 +20,68 @@ const ObjectsPriceContent = ({ formData, handleInputChange, success, onApartment
     }, [selectedApartments]);
 
     const handlePriceInputChange = (e) => {
-        // Държим текущата стойност на полето, но не извикваме автоматично setManualPrice
         const value = e.target.value;
         setInputPrice(value);
     };
 
     const handlePriceBlur = () => {
-        // Когато потребителят загуби фокус от полето, актуализираме ръчно зададената цена
         const parsedPrice = parseFloat(inputPrice);
         setManualPrice(!isNaN(parsedPrice) ? Math.round(parsedPrice * 100) / 100 : null);
     };
 
+    const handleDiscountChange = (e) => {
+        const value = parseFloat(e.target.value);
+        setDiscount(!isNaN(value) ? value : 0);
+    };
+
+    const handleBrokerPercentChange = (e) => {
+        const value = e.target.value;
+        setBrokerPercent(value);
+
+        if (value === '') {
+            // Ако полето е празно, нулираме комисионната в евро
+            setBrokerProfit('');
+            return;
+        }
+
+        const parsedValue = parseFloat(value);
+        const total = getCurrentPrice();
+        if (!isNaN(parsedValue) && total > 0) {
+            const profitInEur = (total * parsedValue) / 100;
+            setBrokerProfit(Math.round(profitInEur * 100) / 100); // Закръгляме до 2 знака
+        } else {
+            setBrokerProfit('');
+        }
+    };
+
+    const handleBrokerProfitChange = (e) => {
+        const value = e.target.value;
+        setBrokerProfit(value);
+
+        if (value === '') {
+            // Ако полето е празно, нулираме процента на комисионната
+            setBrokerPercent('');
+            return;
+        }
+
+        const parsedValue = parseFloat(value);
+        const total = getCurrentPrice();
+        if (!isNaN(parsedValue) && total > 0) {
+            const percent = (parsedValue / total) * 100;
+            setBrokerPercent(Math.round(percent * 100) / 100); // Закръгляме до 2 знака
+        } else {
+            setBrokerPercent('');
+        }
+    };
+
     const getCurrentPrice = () => {
-        // Връщаме ръчно въведената цена, ако има такава, иначе автоматичната цена
-        return manualPrice !== null ? manualPrice : totalPrice;
+        const basePrice = manualPrice !== null ? manualPrice : totalPrice;
+        return Math.max(basePrice - discount, 0); // Връщаме общата цена с включена отстъпка, но не по-малко от 0
     };
 
     useEffect(() => {
-        // Синхронизираме полето с текущата цена
         setInputPrice(getCurrentPrice().toString());
-    }, [totalPrice, manualPrice]);
+    }, [totalPrice, manualPrice, discount]);
 
     return (
         <div className="contract-purchaser-broker-container">
@@ -65,19 +110,41 @@ const ObjectsPriceContent = ({ formData, handleInputChange, success, onApartment
 
             <div className="purchaser-container">
                 <div className="form-group">
+                    Discount in €
+                    <input
+                        type="text"
+                        className="form-control no-spinner"
+                        id="discount"
+                        placeholder="Discount in €"
+                        value={discount}
+                        onChange={handleDiscountChange} 
+                    />
+                </div>
+                <div className="form-group">
                     <label htmlFor="totalPrice">Total Price in €</label>
                     <input
                         type="text"
                         className="form-control no-spinner"
                         id="totalPrice"
                         value={inputPrice}
-                        onChange={handlePriceInputChange} // Държим текущото съдържание без да го актуализираме автоматично
-                        onBlur={handlePriceBlur} // Актуализираме ръчно само при загуба на фокус
+                        onChange={handlePriceInputChange}
+                        onBlur={handlePriceBlur}
                     />
                 </div>
             </div>
 
             <div className="broker-container">
+                <div className="form-group">
+                    Broker profit in %
+                    <input
+                        type="text"
+                        className="form-control no-spinner"
+                        id="brokerProfitPercent"
+                        placeholder="Broker profit in %"
+                        value={brokerPercent}
+                        onChange={handleBrokerPercentChange} // При промяна на процента изчисляваме комисионната в €
+                    />
+                </div>
                 <div className="form-group">
                     <label htmlFor="brokerProfit">Broker Profit in €</label>
                     <input
@@ -85,6 +152,8 @@ const ObjectsPriceContent = ({ formData, handleInputChange, success, onApartment
                         className="form-control no-spinner"
                         id="brokerProfit"
                         placeholder="€"
+                        value={brokerProfit}
+                        onChange={handleBrokerProfitChange} // При промяна на сумата в € изчисляваме процента
                     />
                 </div>
             </div>

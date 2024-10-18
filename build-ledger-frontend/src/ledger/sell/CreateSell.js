@@ -175,7 +175,7 @@ const CreateSell = () => {
                 </button>
             </form>
 
-            {/* Modal Component */}
+            {/* Modals Component */}
             <AllApartmentsForSaleModal 
                 show={showModal} 
                 handleClose={handleCloseModal} 
@@ -187,6 +187,7 @@ const CreateSell = () => {
             handleClose={handleCloseGarageModal}
             garages={garages}
             onGaragesSelect={handleGaragesSelect}/>
+            
             <AllParkingPlacesForSaleModal
             show={showParkingPlaceModal}
             handleClose={handleCloseParkingPlaceModal}
