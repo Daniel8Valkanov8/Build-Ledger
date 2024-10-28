@@ -1,10 +1,12 @@
 package com.buildledger.backend.model.ledger;
 
 import com.buildledger.backend.enums.SellStatus;
+import com.buildledger.backend.model.abstraction.Person;
 import com.buildledger.backend.model.sos.Apartment;
 import com.buildledger.backend.model.sos.Garage;
 import com.buildledger.backend.model.persons.Broker;
 import com.buildledger.backend.model.persons.Purchaser;
+import com.buildledger.backend.model.sos.ParkingPlace;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,21 +22,22 @@ public class Sell {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private double fixedPrice;
-    private double discountInPercent;
-    private double sellPrice;
-    private double brokerProfit;
-    private double profit;
+    private Long cooperationId;
+
+    private double discountInEuro;
+    private double totalPriceInEuro;
+    private double brokerProfitInEuro;
+    private double brokerProfitInPercentage;
 
     private LocalDate contractDate;
 
-    private SellStatus sellStatus;
     private String description;
     private String filePath;
 
     @ManyToOne()
     @JoinColumn(name = "broker_id")
     private Broker broker;
+
 
     @ManyToOne()
     @JoinColumn(name = "purchaser_id") // Променете името на колоната
@@ -45,6 +48,9 @@ public class Sell {
 
     @OneToMany(mappedBy = "sell")
     private Set<Garage> garages = new HashSet<>();
+
+    @OneToMany(mappedBy = "sell")
+    private Set<ParkingPlace> parkingPlaces = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "payment_id")

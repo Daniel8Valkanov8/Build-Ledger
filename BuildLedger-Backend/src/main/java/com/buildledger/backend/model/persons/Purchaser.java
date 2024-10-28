@@ -15,10 +15,9 @@ import java.util.Set;
 @Setter
 public class Purchaser extends Person {
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "purchaser")
-    private Set<Sell> purchases = new HashSet<>();
+    private final String type = "purchaser";
 
-    @OneToMany(mappedBy = "purchaser")
-    private Set<Installment> installments = new HashSet<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "purchaser")
+    private Set<Sell> sells = new HashSet<>();
 
 }

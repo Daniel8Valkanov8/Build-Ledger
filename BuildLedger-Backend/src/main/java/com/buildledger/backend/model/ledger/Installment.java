@@ -19,13 +19,12 @@ public class Installment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private String installment;
+
     private double amountInPercent;
 
     private double installmentAmount;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Currency currency;
 
     @Column
     private LocalDate installmentDate;
@@ -40,12 +39,10 @@ public class Installment {
 
     private double installmentReceivedAmount;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private IsPayStatus isPayStatus;
 
     @Column
-    private String note;
+    private boolean isPayStatus;
+
 
     @ManyToOne
     @JoinColumn(name = "sell_id")

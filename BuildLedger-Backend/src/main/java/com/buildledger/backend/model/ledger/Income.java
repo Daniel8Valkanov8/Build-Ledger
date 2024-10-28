@@ -17,16 +17,6 @@ public class Income {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private long id;
 
-        private String title;
-
-        private double amount;
-
-        private Currency currency;
-
-        private LocalDate date;
-
-        private String note;
-
         private boolean isPayed;
 
         @OneToOne

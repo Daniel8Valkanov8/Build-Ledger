@@ -1,8 +1,12 @@
 package com.buildledger.backend.model.abstraction;
 
+import com.buildledger.backend.model.ledger.Sell;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @MappedSuperclass
 @Getter
@@ -14,5 +18,6 @@ public abstract class Person {
 
     private String firstName;
     private String lastName;
+    private String email;
 
 }

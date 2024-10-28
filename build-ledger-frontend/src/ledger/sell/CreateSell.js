@@ -19,12 +19,15 @@ const CreateSell = () => {
     
     const [formData, setFormData] = useState({
         id: id,
-        contractNumber: '',
         purchaserFirstName: '',
         purchaserLastName: '',
-        discount: '',
+        purchaserEmail: '',
         brokerFirstName: '',
         brokerLastName: '',
+        brockerEmail: '',
+
+
+        discount: '',
         brokerProfit: '',
         entrance: '',
         floor: '',
@@ -42,7 +45,8 @@ const CreateSell = () => {
     const [garages, setGarages] = useState([]);
     const [parkingPlaces, setParkingPlaces] = useState([]);
     const [success, setSuccess] = useState(null);
-    const [selectedGarages, setSelectedGarages] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(null);
+    
     const handleApartmentSelect = (apartment) => {
         // Проверяваме дали този апартамент вече е избран, за да избегнем дублиране
         if (!selectedApartments.some(a => a.id === apartment.id)) {
@@ -50,7 +54,13 @@ const CreateSell = () => {
             setSelectedApartments((prevSelected) => [...prevSelected, apartment]);
         }
     };
-
+    const getTotalPriceWithDiscount = (totalPrice) => {
+        
+        // todo fotalpriceWithdiscount from ObjectsPriceContent 
+       
+        console.log(totalPrice)
+        
+    };
     const handleGaragesSelect = (garage) => {
         
         // Проверяваме дали този апартамент вече е избран, за да избегнем дублиране
@@ -136,6 +146,31 @@ const CreateSell = () => {
         setShowParkingPlaceModal(false);
     };
 
+    const createSell = async () => {
+        try {
+            const data = new FormData();
+            data.append('contract', selectedFile);
+            data.append('purchaserFirstName', formData.purchaserFirstName);
+            data.append('purchaserLastName', formData.purchaserLastName);
+            data.append('purchaserEmail', formData.purchaserEmail);
+            data.append('brokerFirstName', formData.brokerFirstName);
+            data.append('brokerLastName', formData.brokerLastName);
+            data.append('brokerEmail', formData.brokerEmail);
+
+
+            // Изпращане на празна POST заявка
+            const response = await axios.post(`http://localhost:8080/cooperation/${id}/create-sell`, data, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            
+            
+            console.log('POST request successful', response.data);
+            setSuccess('Sell created successfully!');
+        } catch (error) {
+            console.error('Error creating sell', error);
+            setSuccess(null);
+        }
+    };
 
     return (
         <div className="create-sell-container">
@@ -149,19 +184,20 @@ const CreateSell = () => {
                     success={success}
                 />
 
-                <ObjectsPriceContent 
-                    formData={formData}
-                    handleInputChange={handleInputChange}
-                    success={success}
-                    apartments={apartments} 
-                    garages={garages} 
-                    parkingPlaces={parkingPlaces} 
-                    onApartmentClick={handleOpenModal} // Pass the function to open the modal
-                    onGarageClick={handleOpenGarageModal}
-                    onParkingPlaceClick={handleOpenParkingPlaceModal}
-                    handleApartmentSelected={handleApartmentSelect}
-                    selectedApartments={selectedApartments} 
-                />
+            <ObjectsPriceContent
+                formData={formData}
+                handleInputChange={handleInputChange}
+                success={success}
+                apartments={apartments}
+                garages={garages}
+                parkingPlaces={parkingPlaces}
+                onApartmentClick={handleOpenModal}
+                onGarageClick={handleOpenGarageModal}
+                onParkingPlaceClick={handleOpenParkingPlaceModal}
+                handleApartmentSelected={handleApartmentSelect}
+                selectedApartments={selectedApartments}
+                getTotalPriceWithDiscount={getTotalPriceWithDiscount} // Подаваме функцията като пропс
+            />
 
                 <PaymentContent
                     formData={formData}
@@ -170,7 +206,7 @@ const CreateSell = () => {
                     success={success}
                 />
 
-                <button type="submit" className="btn btn-outline-primary mt-3">
+                <button type="submit" className="btn btn-outline-primary mt-3" onClick={createSell}>
                     Create Sell
                 </button>
             </form>

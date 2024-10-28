@@ -22,6 +22,7 @@ const ObjectsPriceContent = ({ formData, handleInputChange, success, onApartment
     const handlePriceInputChange = (e) => {
         const value = e.target.value;
         setInputPrice(value);
+        console.log(inputPrice)
     };
 
     const handlePriceBlur = () => {
@@ -32,7 +33,12 @@ const ObjectsPriceContent = ({ formData, handleInputChange, success, onApartment
     const handleDiscountChange = (e) => {
         const value = parseFloat(e.target.value);
         setDiscount(!isNaN(value) ? value : 0);
+    
+        // Принтираме новата стойност на цената след въвеждане на отстъпка
+        const currentPrice = getCurrentPrice(); // Изчисляваме цената след отстъпка
+        console.log(`Total Price after discount: ${currentPrice}`);
     };
+    
 
     const handleBrokerPercentChange = (e) => {
         const value = e.target.value;

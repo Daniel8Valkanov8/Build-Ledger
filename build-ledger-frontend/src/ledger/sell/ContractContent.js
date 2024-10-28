@@ -51,7 +51,17 @@ const ContractContent = ({ formData, handleInputChange, handleFileClick, handleF
                         onChange={handleInputChange}
                     />
                 </div>
-              
+                <div className="form-group">
+                    <input
+                        type="text"
+                        className="form-control no-spinner"
+                        id="purchaserEmail"
+                        name="purchaserEmail"
+                        placeholder="Email"
+                        value={formData.purchaserEmail || ''}
+                        onChange={handleInputChange}
+                    />
+                </div>
             </div>
 
             {/* Broker Section */}
@@ -79,7 +89,17 @@ const ContractContent = ({ formData, handleInputChange, handleFileClick, handleF
                         onChange={handleInputChange}
                     />
                 </div>
-                
+                <div className="form-group">
+                    <input
+                        type="text"
+                        className="form-control no-spinner"
+                        id="brokerEmail"
+                        name="brokerEmail"
+                        placeholder="Email"
+                        value={formData.brokerEmail || ''}
+                        onChange={handleInputChange}
+                    />
+                </div>
             </div>
         </div>
     );

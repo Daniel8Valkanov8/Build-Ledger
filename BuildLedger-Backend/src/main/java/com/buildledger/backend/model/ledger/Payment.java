@@ -20,14 +20,12 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
-    private double amountReceivedLv;
-    private double amountRemainingLv;
+    private double amountReceived;
+    private double amountRemaining;
 
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Installment> installments = new HashSet<>();
     private int installmentCount;
-
-    private String note;
 
     @OneToOne
     @JoinColumn(name = "sell_id")

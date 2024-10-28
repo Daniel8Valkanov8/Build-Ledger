@@ -75,3 +75,38 @@ button[type="submit"]:hover {
     background-color: #007bff;
     color: white;
 }
+/* Container for each installment row */
+.installment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px; /* Adds space between each row */
+}
+
+/* Container for installment input */
+.installment-field,
+.installment-date-field {
+    flex: 1;
+    margin-right: 10px; /* Adds space between the installment and date fields */
+}
+
+/* Remove the margin for the last field to ensure it fits nicely */
+.installment-date-field {
+    margin-right: 0;
+}
+
+/* Ensure all inputs have the same size */
+.installment-input,
+.installment-date {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Optional: Adjust label spacing for uniformity */
+.installment-field label,
+.installment-date-field label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}

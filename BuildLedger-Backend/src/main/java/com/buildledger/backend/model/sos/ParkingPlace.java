@@ -1,6 +1,7 @@
 package com.buildledger.backend.model.sos;
 
 import com.buildledger.backend.model.building.Building;
+import com.buildledger.backend.model.ledger.Sell;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +28,9 @@ public class ParkingPlace {
     @ManyToOne
     @JoinColumn(name = "building_id")
     private Building cooperation;
-
+    @ManyToOne
+    @JoinColumn(name = "sell_id")
+    private Sell sell;
     public ParkingPlace(String number) {
         this.number = number;
     }

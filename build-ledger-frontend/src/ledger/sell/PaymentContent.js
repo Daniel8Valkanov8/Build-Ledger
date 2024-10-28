@@ -64,33 +64,39 @@ const PaymentContent = ({ formData, handleInputChange, paymentSchemas, success, 
             </div>
 
             <div className="purchaser-container">
-                <label htmlFor="purchaserFirstName">Installments and Dates</label>
+                
 
                 {selectedSchema && installments.map((installment, index) => (
-                    <div className="form-group" key={index}>
-                        <label htmlFor={`installment${index + 1}`}>
-                            Installment {index + 1} ({selectedSchema.percentOfInstallments[index]}%)
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id={`installment${index + 1}`}
-                            name={`installment${index + 1}`}
-                            placeholder={`€`}
-                            value={installment}
-                            onChange={(e) => handleInstallmentChange(index, e.target.value)}
-                        />
-                        <div className="form-group">
-                            <label htmlFor={`installmentDate${index + 1}`}>Installment Date</label>
-                            <DatePicker
-                                selected={formData[`installmentDate${index + 1}`]}
-                                onChange={(date) => handleDateChange(date, `installmentDate${index + 1}`)}
-                                dateFormat="dd/MM/yyyy"
-                                className="form-control"
-                            />
-                        </div>
-                    </div>
-                ))}
+                    <div className="form-group">
+    <div className="installment-row" key={index}> {/* New class for the container */}
+        <div className="installment-field"> {/* New class for installment input */}
+            <label htmlFor={`installment${index + 1}`}>
+                Installment {index + 1} ({selectedSchema.percentOfInstallments[index]}%)
+            </label>
+            <input
+                type="text"
+                className="form-control installment-input"
+                id={`installment${index + 1}`}
+                name={`installment${index + 1}`}
+                placeholder={`€`}
+                value={installment}
+                onChange={(e) => handleInstallmentChange(index, e.target.value)}
+            />
+        </div>
+        <div className="installment-date-field"> {/* New class for date input */}
+            <label htmlFor={`installmentDate${index + 1}`}>Installment Date</label>
+            <DatePicker
+                selected={formData[`installmentDate${index + 1}`]}
+                onChange={(date) => handleDateChange(date, `installmentDate${index + 1}`)}
+                dateFormat="dd/MM/yyyy"
+                className="form-control installment-date"
+            />
+        </div>
+    </div>
+    </div>
+)
+)}
+
             </div>
 
             <div className="broker-container">

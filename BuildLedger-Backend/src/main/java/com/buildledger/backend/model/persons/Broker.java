@@ -13,7 +13,9 @@ import java.util.Set;
 @Getter
 @Setter
 public class Broker extends Person {
-
+    private final String type = "purchaser";
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "broker")
     private Set<Sell> sells = new HashSet<>();
+
+
 }
