@@ -1,0 +1,65 @@
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import './CreateSell.css';
+import axios from 'axios';
+import ContractContent from './ContractContent';
+
+const CreateSell = () => {
+    const { id } = useParams();
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [formData, setFormData] = useState({
+        purchaserFirstName: '',
+        purchaserLastName: '',
+        purchaserEmail: '',
+        brokerFirstName: '',
+        brokerLastName: '',
+        brokerEmail: '',
+    });
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setSelectedFile(file);
+    };
+    const [success, setSuccess] = useState(null);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const createSell = async () => {
+        try {
+            const response = await axios.post(`http://localhost:8080/cooperation/${id}/create-sell`, formData, {
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            console.log('POST request successful', response.data);
+            setSuccess('Sell created successfully!');
+        } catch (error) {
+            console.error('Error creating sell', error);
+            setSuccess(null);
+        }
+    };
+
+    return (
+        <div className="create-sell-container">
+            <h1>Create Sell</h1>
+            <form onSubmit={(e) => { e.preventDefault(); createSell(); }}>
+            <ContractContent
+                    formData={formData}
+                    handleInputChange={handleInputChange}
+                    handleFileClick={() => document.getElementById('fileInput').click()}
+                    handleFileChange={handleFileChange}
+                    success={success}
+                />
+                <button type="submit" className="btn btn-outline-primary mt-3">
+                    Create Sell
+                </button>
+            </form>
+        </div>
+    );
+};
+
+export default CreateSell;

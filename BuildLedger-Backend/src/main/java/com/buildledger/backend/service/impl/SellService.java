@@ -53,9 +53,11 @@ public class SellService {
         this.incomeRepository = incomeRepository;
     }
 
-    public String createSell(Long id, MultipartFile contract, CreateSellDTO createSellDTO) {
+    public String createSell(Long id, CreateSellDTO createSellDTO) {
         Sell sell = new Sell();
         sell.setCooperationId(id);
+        //todo
+        MultipartFile contract = null;
         contractSetData(contract, createSellDTO, sell);
         addObjectsInSell(createSellDTO, sell);
         Sell savedSell = sellRepository.saveAndFlush(sell);

@@ -14,6 +14,20 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Setter
 public class CreateSellDTO {
+
+    //todo
+    private String paymentSchema;
+    private InstallmentAndDate[] installmentAndDates;
+
+    private SelfContainedUnits[] selfContainedUnits;
+    private double discountInEuro;
+    private double totalPriceInEuro;
+    private double brokerProfitInPercentage;
+    private double brokerProfitInEuro;
+    //todo add contract date in frontend
+    private LocalDate contractDate;
+
+    //ready
     private String purchaserFirstName;
     private String purchaserLastName;
     private String purchaserEmail;
@@ -22,14 +36,7 @@ public class CreateSellDTO {
     private String brokerEmail;
 
 
-    private SelfContainedUnits[] selfContainedUnits;
-    private double discountInEuro;
-    private double brokerProfitInPercentage;
-    private double totalPriceInEuro;
-    private double brokerProfitInEuro;
-    private String paymentSchema;
-    private InstallmentAndDate[] installmentAndDates;
-    private LocalDate contractDate;
+
     private String description;
     private double price;
 

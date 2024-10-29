@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ObjectsPriceContent.css';
 
-const ObjectsPriceContent = ({ formData, handleInputChange, success, onApartmentClick, onGarageClick, onParkingPlaceClick, selectedApartments }) => {
+const ObjectsPriceContent = ({ formData, handleInputChange, success, onApartmentClick, onGarageClick, onParkingPlaceClick, selectedApartments,  onDiscountChange, onBrokerPercentChange, onBrokerProfitChange, onTotalPriceChange  }) => {
     const [totalPrice, setTotalPrice] = useState(0); // Държим общата цена
     const [manualPrice, setManualPrice] = useState(null); // Съхраняваме ръчно въведената цена
     const [inputPrice, setInputPrice] = useState(''); // Държим текущото съдържание на полето
@@ -30,19 +30,19 @@ const ObjectsPriceContent = ({ formData, handleInputChange, success, onApartment
         setManualPrice(!isNaN(parsedPrice) ? Math.round(parsedPrice * 100) / 100 : null);
     };
 
-    const handleDiscountChange = (e) => {
+
+
+      const handleDiscountChange = (e) => {
         const value = parseFloat(e.target.value);
         setDiscount(!isNaN(value) ? value : 0);
-    
-        // Принтираме новата стойност на цената след въвеждане на отстъпка
-        const currentPrice = getCurrentPrice(); // Изчисляваме цената след отстъпка
-        console.log(`Total Price after discount: ${currentPrice}`);
+        onDiscountChange(value); // Call the callback function
     };
-    
 
     const handleBrokerPercentChange = (e) => {
         const value = e.target.value;
         setBrokerPercent(value);
+        onBrokerPercentChange(value);
+
 
         if (value === '') {
             // Ако полето е празно, нулираме комисионната в евро
@@ -63,7 +63,7 @@ const ObjectsPriceContent = ({ formData, handleInputChange, success, onApartment
     const handleBrokerProfitChange = (e) => {
         const value = e.target.value;
         setBrokerProfit(value);
-
+        onBrokerProfitChange(value);
         if (value === '') {
             // Ако полето е празно, нулираме процента на комисионната
             setBrokerPercent('');
@@ -82,7 +82,9 @@ const ObjectsPriceContent = ({ formData, handleInputChange, success, onApartment
 
     const getCurrentPrice = () => {
         const basePrice = manualPrice !== null ? manualPrice : totalPrice;
-        return Math.max(basePrice - discount, 0); // Връщаме общата цена с включена отстъпка, но не по-малко от 0
+        const priceAfterDiscount = Math.max(basePrice - discount, 0);
+        onTotalPriceChange(priceAfterDiscount); // Call the callback function
+        return priceAfterDiscount; // Връщаме общата цена с включена отстъпка, но не по-малко от 0
     };
 
     useEffect(() => {

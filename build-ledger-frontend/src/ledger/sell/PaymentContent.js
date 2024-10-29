@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './CreateSell.css';
-import DatePicker from 'react-datepicker'; // Замяна на Datetime с DatePicker
-import 'react-datepicker/dist/react-datepicker.css'; // Добавяме стиловете за react-datepicker
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const PaymentContent = ({ formData, handleInputChange, paymentSchemas, success, totalPrice }) => {
+const PaymentContent = ({ formData, handleInputChange, paymentSchemas, success }) => {
     const [selectedSchema, setSelectedSchema] = useState(null);
     const [installments, setInstallments] = useState([]);
 
@@ -15,8 +15,12 @@ const PaymentContent = ({ formData, handleInputChange, paymentSchemas, success, 
         if (schema) {
             const initialInstallments = Array(schema.installmentCount).fill('');
             setInstallments(initialInstallments);
+
+            // Актуализиране на формата с paymentSchema заглавие
+            handleInputChange({ target: { name: 'paymentSchema', value: schema.title } });
         } else {
             setInstallments([]);
+            handleInputChange({ target: { name: 'paymentSchema', value: '' } });
         }
 
         handleInputChange(e);
@@ -64,39 +68,35 @@ const PaymentContent = ({ formData, handleInputChange, paymentSchemas, success, 
             </div>
 
             <div className="purchaser-container">
-                
-
                 {selectedSchema && installments.map((installment, index) => (
-                    <div className="form-group">
-    <div className="installment-row" key={index}> {/* New class for the container */}
-        <div className="installment-field"> {/* New class for installment input */}
-            <label htmlFor={`installment${index + 1}`}>
-                Installment {index + 1} ({selectedSchema.percentOfInstallments[index]}%)
-            </label>
-            <input
-                type="text"
-                className="form-control installment-input"
-                id={`installment${index + 1}`}
-                name={`installment${index + 1}`}
-                placeholder={`€`}
-                value={installment}
-                onChange={(e) => handleInstallmentChange(index, e.target.value)}
-            />
-        </div>
-        <div className="installment-date-field"> {/* New class for date input */}
-            <label htmlFor={`installmentDate${index + 1}`}>Installment Date</label>
-            <DatePicker
-                selected={formData[`installmentDate${index + 1}`]}
-                onChange={(date) => handleDateChange(date, `installmentDate${index + 1}`)}
-                dateFormat="dd/MM/yyyy"
-                className="form-control installment-date"
-            />
-        </div>
-    </div>
-    </div>
-)
-)}
-
+                    <div className="form-group" key={index}>
+                        <div className="installment-row">
+                            <div className="installment-field">
+                                <label htmlFor={`installment${index + 1}`}>
+                                    Installment {index + 1} ({selectedSchema.percentOfInstallments[index]}%)
+                                </label>
+                                <input
+                                    type="text"
+                                    className="form-control installment-input"
+                                    id={`installment${index + 1}`}
+                                    name={`installment${index + 1}`}
+                                    placeholder="€"
+                                    value={installment}
+                                    onChange={(e) => handleInstallmentChange(index, e.target.value)}
+                                />
+                            </div>
+                            <div className="installment-date-field">
+                                <label htmlFor={`installmentDate${index + 1}`}>Installment Date</label>
+                                <DatePicker
+                                    selected={formData[`installmentDate${index + 1}`]}
+                                    onChange={(date) => handleDateChange(date, `installmentDate${index + 1}`)}
+                                    dateFormat="dd/MM/yyyy"
+                                    className="form-control installment-date"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
 
             <div className="broker-container">

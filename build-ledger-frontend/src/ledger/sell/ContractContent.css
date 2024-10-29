@@ -1,0 +1,36 @@
+/*.contract-file-group {
+    display: flex;                  
+    flex-direction: column;        
+    align-items: center;           
+    justify-content: space-between; /* Distribute space evenly 
+    height: 100%;                  
+}
+
+.input-file-container {
+    display: flex;                 
+    align-items: center;          
+    justify-content: center;       
+    height: 100px;                
+    width: 100px;                 
+    border: 1px dashed #ccc;      
+    border-radius: 8px;           
+    margin: 20px 0;               /* Add vertical margin for spacing 
+}
+
+.upload-icon {
+    font-size: 36px;
+    color: #007bff;
+}
+
+.progress-custom {
+    margin-top: 10px;
+    width: 100%;    
+}
+
+.upload-success-message {
+    margin-top: 10px;            /* Margin to separate from the progress bar or upload icon 
+    color: green;
+    font-weight: bold;
+    text-align: center;
+}
+*/

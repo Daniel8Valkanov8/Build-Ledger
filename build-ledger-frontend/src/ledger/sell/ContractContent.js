@@ -1,28 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import './ContractContent.css';
 
 const ContractContent = ({ formData, handleInputChange, handleFileClick, handleFileChange, success }) => {
+    const [uploading, setUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [fileUploaded, setFileUploaded] = useState(null);
+
+    const handleFileUpload = (event) => {
+        setUploading(true);
+        const file = event.target.files[0];
+
+        if (file) {
+            let progress = 0;
+            setFileUploaded(file); // Записваме файла в състоянието
+            const interval = setInterval(() => {
+                progress += 10; // Увеличаваме прогреса с 10%
+                setUploadProgress(progress);
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setUploading(false);
+                    setUploadProgress(100);
+                }
+            }, 200); // Актуализираме на всеки 200 ms
+
+            // Извикваме външната функция за обработка на файла
+            handleFileChange(event);
+        }
+    };
+
     return (
         <div className="contract-purchaser-broker-container">
             {/* Contract Section */}
             <div className="contract-container">
                 {success && <div className="alert alert-success">{success}</div>}
+                <label htmlFor="contractNumber">Import Contract</label>
                 <div className="form-group contract-file-group">
-                    <label htmlFor="contractNumber">Import Contract</label>
-                    <div className="input-file-container">
-                        <div className="file-icon" onClick={handleFileClick}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-file-earmark-plus" viewBox="0 0 16 16">
-                                <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5"/>
-                                <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
-                            </svg>
-                        </div>
-                        
-                    </div>
-                </div> 
+                
+                <div className="input-file-container" onClick={handleFileClick}>
+                {/* Centered and Enlarged Upload Icon */}
+                    <i className="bi bi-upload upload-icon"></i>
+                </div>
+
+    {/* Progress bar or success message */}
+    {uploading ? (
+        <div className="progress progress-custom">
+            <div
+                className="progress-bar progress-bar-striped progress-bar-animated"
+                role="progressbar"
+                aria-valuenow={uploadProgress}
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style={{ width: `${uploadProgress}%` }}
+            >
+                {uploadProgress}%
+            </div>
+        </div>
+    ) : (
+        fileUploaded && (
+            <div className="upload-success-message">
+                File uploaded successfully!
+            </div>
+        )
+    )}
+</div>
+
+                
                 <input 
                     type="file" 
                     id="fileInput" 
                     style={{ display: 'none' }} 
-                    onChange={handleFileChange}
+                    onChange={handleFileUpload}
                 />
             </div>
 
