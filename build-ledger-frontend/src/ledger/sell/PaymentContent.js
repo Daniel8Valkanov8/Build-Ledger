@@ -3,7 +3,7 @@ import './CreateSell.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const PaymentContent = ({ formData, handleInputChange, paymentSchemas, success }) => {
+const PaymentContent = ({ formData, handleInputChange, paymentSchemas, success, handleInstallmentsChange }) => {
     const [selectedSchema, setSelectedSchema] = useState(null);
     const [installments, setInstallments] = useState([]);
 
@@ -13,30 +13,26 @@ const PaymentContent = ({ formData, handleInputChange, paymentSchemas, success }
         setSelectedSchema(schema);
 
         if (schema) {
-            const initialInstallments = Array(schema.installmentCount).fill('');
+            const initialInstallments = Array(schema.installmentCount).fill({
+                sumInEuros: '',
+                date: null
+            });
             setInstallments(initialInstallments);
-
-            // Актуализиране на формата с paymentSchema заглавие
-            handleInputChange({ target: { name: 'paymentSchema', value: schema.title } });
         } else {
             setInstallments([]);
-            handleInputChange({ target: { name: 'paymentSchema', value: '' } });
         }
 
         handleInputChange(e);
     };
 
-    const handleInstallmentChange = (index, value) => {
+    const handleInstallmentChange = (index, field, value) => {
         const newInstallments = [...installments];
-        newInstallments[index] = value;
+        newInstallments[index] = {
+            ...newInstallments[index],
+            [field]: value
+        };
         setInstallments(newInstallments);
-
-        const updatedInstallments = newInstallments.join(',');
-        handleInputChange({ target: { name: 'installments', value: updatedInstallments } });
-    };
-
-    const handleDateChange = (date, name) => {
-        handleInputChange({ target: { name, value: date } });
+        handleInstallmentsChange(index, field, value); // Updates installments in formData
     };
 
     return (
@@ -79,17 +75,16 @@ const PaymentContent = ({ formData, handleInputChange, paymentSchemas, success }
                                     type="text"
                                     className="form-control installment-input"
                                     id={`installment${index + 1}`}
-                                    name={`installment${index + 1}`}
                                     placeholder="€"
-                                    value={installment}
-                                    onChange={(e) => handleInstallmentChange(index, e.target.value)}
+                                    value={installment.sumInEuros}
+                                    onChange={(e) => handleInstallmentChange(index, 'sumInEuros', e.target.value)}
                                 />
                             </div>
                             <div className="installment-date-field">
                                 <label htmlFor={`installmentDate${index + 1}`}>Installment Date</label>
                                 <DatePicker
-                                    selected={formData[`installmentDate${index + 1}`]}
-                                    onChange={(date) => handleDateChange(date, `installmentDate${index + 1}`)}
+                                    selected={installment.date}
+                                    onChange={(date) => handleInstallmentChange(index, 'date', date)}
                                     dateFormat="dd/MM/yyyy"
                                     className="form-control installment-date"
                                 />
@@ -105,6 +100,7 @@ const PaymentContent = ({ formData, handleInputChange, paymentSchemas, success }
                     <textarea
                         className="form-control"
                         id="description"
+                        name="description"  // Ensure name is set to "description"
                         rows="5"
                         placeholder="Add description to this sell"
                         value={formData.description}
