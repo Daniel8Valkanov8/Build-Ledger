@@ -5,13 +5,27 @@ import './CreateSell.css';
 import axios from 'axios';
 import ContractContent from './ContractContent';
 import PaymentContent from './PaymentContent';
+import ObjectsPriceContent from './ObjectsPriceContent';
+import AllApartmentsForSaleModal from './modals/ApartmentsModal';
+import AllGaragesForSaleModal from './modals/GaragesModal';
+import AllParkingPlacesForSaleModal from './modals/ParkingPlacesModal';
 
 const CreateSell = () => {
     const { id } = useParams();
     const [selectedFile, setSelectedFile] = useState(null);
     const [paymentSchemas, setPaymentSchemas] = useState([]);
     const [success, setSuccess] = useState(null);
+    {/*objectPriceContentstates*/}
 
+    const [selectedObjects, setSelectedObjects] = useState([]);
+    const [prepareObjectsToPost, setPrepareObjectsToPost] = useState([]); 
+    const [showModal, setShowModal] = useState(false); 
+    const [showGarageModal, setShowGarageModal] = useState(false); 
+    const [showParkingPlaceModal, setShowParkingPlaceModal] = useState(false);
+    const [apartments, setApartments] = useState([]);
+    const [garages, setGarages] = useState([]);
+    const [parkingPlaces, setParkingPlaces] = useState([]);
+    
     const [formData, setFormData] = useState({
         id: id,
 
@@ -22,6 +36,11 @@ const CreateSell = () => {
         brokerLastName: '',
         brokerEmail: '',
 
+        /*objectPriceContentstates*/
+        discountInEuro: '',
+        brokerProfitInEuro: '',
+        brokerProfitInPercentage: '',
+        totalPriceInEuro: '',
 
         paymentSchemaId: '',
         installments: [],
@@ -33,10 +52,50 @@ const CreateSell = () => {
         setSelectedFile(file);
     };
 
-    
+    const handleApartmentSelect = (apartment) => {
+        if (!selectedObjects.some(a => a.id === apartment.id)) {
+            setSelectedObjects((prevSelected) => [...prevSelected, apartment]);
+            setPrepareObjectsToPost((prevPrepared) => [
+                ...prevPrepared,
+                { id: apartment.id, number: apartment.number, priceEur: apartment.priceEur }
+            ]);
+            console.log("Prepared Objects to Post:", prepareObjectsToPost);
+        }
+    };
+
+    const handleGaragesSelect = (garage) => {
+        if (!selectedObjects.some(g => g.id === garage.id && g.number === garage.number && g.type === 'garage')) {
+            setSelectedObjects((prevSelected) => [...prevSelected, garage]);
+            setPrepareObjectsToPost((prevPrepared) => [
+                ...prevPrepared,
+                { id: garage.id, number: garage.number, priceEur: garage.priceEur }
+            ]);
+            console.log("Prepared Objects to Post:", prepareObjectsToPost);
+        }
+    };
+
+    const handleParkingPlaceSelect = (parkingPlace) => {
+        if (!selectedObjects.some(p => p.id === parkingPlace.id)) {
+            setSelectedObjects((prevSelected) => [...prevSelected, parkingPlace]);
+            setPrepareObjectsToPost((prevPrepared) => [
+                ...prevPrepared,
+                { id: parkingPlace.id, number: parkingPlace.number, priceEur: parkingPlace.priceEur }
+            ]);
+            console.log("Prepared Objects to Post:", prepareObjectsToPost);
+        }
+    };
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const apartmentsResponse = await axios.get(`http://localhost:8080/apartments/${id}`);
+                setApartments(apartmentsResponse.data);
+
+                const garagesResponse = await axios.get(`http://localhost:8080/garages/${id}`);
+                setGarages(garagesResponse.data);
+
+                const parkingPlacesResponse = await axios.get(`http://localhost:8080/parking-places/${id}`);
+                setParkingPlaces(parkingPlacesResponse.data);
+
                 const paymentSchemasResponse = await axios.get('http://localhost:8080/payment-schema');
                 setPaymentSchemas(paymentSchemasResponse.data);
             } catch (error) {
@@ -74,9 +133,8 @@ const CreateSell = () => {
     };
 
     const createSell = async () => {
-        try {
-            
-            const dataToSend = {
+        
+        const dataToSend = {
                 id: formData.id,
                 purchaserFirstName: formData.purchaserFirstName,
                 purchaserLastName: formData.purchaserLastName,
@@ -85,7 +143,13 @@ const CreateSell = () => {
                 brokerLastName:formData.brokerLastName,
                 brokerEmail: formData.brokerEmail,
                 paymentSchemaId: formData.paymentSchemaId,
-                description: formData.description, // Add description here
+                description: formData.description,
+                // Add description here
+                selfContainedUnits: prepareObjectsToPost,
+                discountInEuro: parseFloat(formData.discountInEuro),
+                totalPriceInEuro: parseFloat(formData.totalPriceInEuro),
+                brokerProfitInPercentage: parseFloat(formData.brokerProfitInPercentage),
+                brokerProfitInEuro: parseFloat(formData.brokerProfitInEuro),
                 installments: formData.installments
                     .filter(installment => installment.date) // Only include filled installments
                     .map(installment => ({
@@ -93,7 +157,7 @@ const CreateSell = () => {
                         date: installment.date ? installment.date.toISOString().split('T')[0] : null
                     }))
             };
-    
+        try {
             const response = await axios.post(
                 `http://localhost:8080/cooperation/${id}/create-sell`,
                 dataToSend,
@@ -110,6 +174,23 @@ const CreateSell = () => {
         }
     };
     
+    {/*objectPriceContentstates*/}
+
+    const handleDiscountChange = (discount) => {
+        setFormData((prevData) => ({ ...prevData, discountInEuro: discount }));
+    };
+
+    const handleBrokerPercentChange = (percent) => {
+        setFormData((prevData) => ({ ...prevData, brokerProfitInPercentage: percent }));
+    };
+
+    const handleBrokerProfitChange = (profit) => {
+        setFormData((prevData) => ({ ...prevData, brokerProfitInEuro: profit }));
+    };
+
+    const handleTotalPriceChange = (totalPrice) => {
+        setFormData((prevData) => ({ ...prevData, totalPriceInEuro: totalPrice }));
+    };
 
     return (
         <div className="create-sell-container">
@@ -123,6 +204,20 @@ const CreateSell = () => {
                 success={success}
                 />
 
+                <ObjectsPriceContent
+                    formData={formData}
+                    handleInputChange={handleInputChange}
+                    success={success}
+                    onApartmentClick={() => setShowModal(true)}
+                    onGarageClick={() => setShowGarageModal(true)}
+                    onParkingPlaceClick={() => setShowParkingPlaceModal(true)}
+                    selectedApartments={selectedObjects}
+                    onDiscountChange={handleDiscountChange}
+                    onBrokerPercentChange={handleBrokerPercentChange}
+                    onBrokerProfitChange={handleBrokerProfitChange}
+                    onTotalPriceChange={handleTotalPriceChange}
+                />
+
                 <PaymentContent
                     formData={formData}
                     handleInputChange={handleInputChange}
@@ -134,6 +229,24 @@ const CreateSell = () => {
                     Create Sell
                 </button>
             </form>
+            <AllApartmentsForSaleModal 
+                show={showModal} 
+                handleClose={() => setShowModal(false)} 
+                apartments={apartments} 
+                onApartmentSelect={handleApartmentSelect}
+            />
+            <AllGaragesForSaleModal
+                show={showGarageModal}
+                handleClose={() => setShowGarageModal(false)}
+                garages={garages}
+                onGaragesSelect={handleGaragesSelect}
+            />
+            <AllParkingPlacesForSaleModal
+                show={showParkingPlaceModal}
+                handleClose={() => setShowParkingPlaceModal(false)}
+                parkingPlaces={parkingPlaces}
+                onParkingPlacesSelect={handleParkingPlaceSelect}
+            />
         </div>
     );
 };
