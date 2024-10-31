@@ -131,39 +131,42 @@ const CreateSell = () => {
 
         console.log('Form Data:', formData);
     };
-
     const createSell = async () => {
-        
-        const dataToSend = {
-                id: formData.id,
-                purchaserFirstName: formData.purchaserFirstName,
-                purchaserLastName: formData.purchaserLastName,
-                purchaserEmail: formData.purchaserEmail,
-                brokerFirstName: formData.brokerFirstName,
-                brokerLastName:formData.brokerLastName,
-                brokerEmail: formData.brokerEmail,
-                paymentSchemaId: formData.paymentSchemaId,
-                description: formData.description,
-                // Add description here
-                selfContainedUnits: prepareObjectsToPost,
-                discountInEuro: parseFloat(formData.discountInEuro),
-                totalPriceInEuro: parseFloat(formData.totalPriceInEuro),
-                brokerProfitInPercentage: parseFloat(formData.brokerProfitInPercentage),
-                brokerProfitInEuro: parseFloat(formData.brokerProfitInEuro),
-                installments: formData.installments
-                    .filter(installment => installment.date) // Only include filled installments
-                    .map(installment => ({
-                        sumInEuros: parseFloat(installment.sumInEuros),
-                        date: installment.date ? installment.date.toISOString().split('T')[0] : null
-                    }))
-            };
+        const dataToSend = new FormData();
+    
+        // Подгответе JSON обекта за изпращане като текстово поле
+        const jsonData = {
+            id: formData.id,
+            purchaserFirstName: formData.purchaserFirstName,
+            purchaserLastName: formData.purchaserLastName,
+            purchaserEmail: formData.purchaserEmail,
+            brokerFirstName: formData.brokerFirstName,
+            brokerLastName: formData.brokerLastName,
+            brokerEmail: formData.brokerEmail,
+            paymentSchema: formData.paymentSchemaId,
+            description: formData.description,
+            selfContainedUnits: prepareObjectsToPost,
+            discountInEuro: parseFloat(formData.discountInEuro),
+            totalPriceInEuro: parseFloat(formData.totalPriceInEuro),
+            brokerProfitInPercentage: parseFloat(formData.brokerProfitInPercentage),
+            brokerProfitInEuro: parseFloat(formData.brokerProfitInEuro),
+            installmentAndDates: formData.installments
+                .filter(installment => installment.date)
+                .map(installment => ({
+                    sumInEuros: parseFloat(installment.sumInEuros),
+                    date: installment.date ? installment.date.toISOString().split('T')[0] : null
+                }))
+        };
+    
+        // Добавете JSON данни като текстово поле
+        dataToSend.append("data", JSON.stringify(jsonData));
+        // Добавете файла
+        dataToSend.append("file", selectedFile);
+    
         try {
             const response = await axios.post(
                 `http://localhost:8080/cooperation/${id}/create-sell`,
-                dataToSend,
-                {
-                    headers: { 'Content-Type': 'application/json' }
-                }
+                dataToSend
             );
     
             console.log('POST request successful', response.data);
@@ -173,6 +176,9 @@ const CreateSell = () => {
             setSuccess(null);
         }
     };
+    
+    
+    
     
     {/*objectPriceContentstates*/}
 

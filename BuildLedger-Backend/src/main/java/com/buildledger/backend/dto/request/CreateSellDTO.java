@@ -15,29 +15,22 @@ import java.time.LocalDate;
 @Setter
 public class CreateSellDTO {
 
-    //todo
-    private String paymentSchema;
-    private InstallmentAndDate[] installmentAndDates;
+    private String paymentSchema;  // paymentSchemaId -> paymentSchema
+    private InstallmentAndDate[] installmentAndDates; // installments -> installmentAndDates
 
     private SelfContainedUnits[] selfContainedUnits;
     private double discountInEuro;
     private double totalPriceInEuro;
     private double brokerProfitInPercentage;
     private double brokerProfitInEuro;
-    //todo add contract date in frontend
-    private LocalDate contractDate;
+    private LocalDate contractDate; // може да бъде добавен като поле в JSON данните, ако е необходимо
 
-    //ready
     private String purchaserFirstName;
     private String purchaserLastName;
     private String purchaserEmail;
     private String brokerFirstName;
     private String brokerLastName;
     private String brokerEmail;
-
-
-
     private String description;
-    private double price;
-
+    private double price; // може да се изчисли от totalPriceInEuro, ако е необходимо
 }
