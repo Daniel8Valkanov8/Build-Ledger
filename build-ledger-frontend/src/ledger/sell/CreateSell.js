@@ -159,14 +159,15 @@ const CreateSell = () => {
         };
     
         // Добавете JSON данни като текстово поле
-        dataToSend.append("data", JSON.stringify(jsonData));
+        //dataToSend.append("data", JSON.stringify(jsonData));
         // Добавете файла
-        dataToSend.append("file", selectedFile);
+        //dataToSend.append("file", selectedFile);
     
         try {
             const response = await axios.post(
                 `http://localhost:8080/cooperation/${id}/create-sell`,
-                dataToSend
+                //dataToSend
+                jsonData
             );
     
             console.log('POST request successful', response.data);

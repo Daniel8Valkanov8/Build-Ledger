@@ -9,21 +9,21 @@ const Navbar = () => {
         Build Ledger
       </Link>
 
-      <div className="navbar-nav ml-auto">
+      <div className="navbar-nav ">
         <li className="nav-item">
           <Link to="/create-project" className="nav-link">
             Create Project
           </Link>
         </li>
       </div>
-      <div className="navbar-nav ml-auto">
+      <div className="navbar-nav ">
         <li className="nav-item">
           <Link to="/all-projects" className="nav-link">
             All Projects
           </Link>
         </li>
       </div>
-      <div className="navbar-nav ml-auto">
+      <div className="navbar-nav ">
                 <li className="nav-item">
                     <Link to={`/create-payment-schema`} className="nav-link">
                         Create Payment Schema

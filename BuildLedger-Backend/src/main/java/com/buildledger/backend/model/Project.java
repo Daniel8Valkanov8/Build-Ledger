@@ -1,7 +1,7 @@
 package com.buildledger.backend.model;
 
-import com.buildledger.backend.model.ledger.Expense;
-import com.buildledger.backend.model.ledger.Income;
+import com.buildledger.backend.model.ledger.accounting.Expense;
+import com.buildledger.backend.model.ledger.accounting.Income;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

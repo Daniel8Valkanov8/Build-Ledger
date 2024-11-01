@@ -33,7 +33,7 @@ public class FloorService {
             Cooperation cooperation = cooperationOpt.get();
 
             // Създаваме и добавяме етажи към кооперацията
-            for (int i = 0; i <=dto.getFloor(); i++) {
+            for (int i = 1; i <=dto.getFloor(); i++) {
                 String floorNumber = String.valueOf(i);
                 Floor floor = new Floor(floorNumber);
                 floor.setCooperation(cooperation);

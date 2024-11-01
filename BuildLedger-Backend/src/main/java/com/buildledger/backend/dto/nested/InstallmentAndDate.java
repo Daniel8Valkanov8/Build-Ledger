@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class InstallmentAndDate {
-    private String installment;
     private double sumInEuros;
     private LocalDate date;
 }

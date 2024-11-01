@@ -1,4 +1,4 @@
-package com.buildledger.backend.model.ledger;
+package com.buildledger.backend.model.ledger.accounting;
 
 import com.buildledger.backend.enums.ExpenseStatus;
 
@@ -12,18 +12,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-public class Expense {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class Expense extends BaseLedger {
 
-
-    private String title;
-    private String unitOfMeasurement;
-    private ExpenseStatus expenseStatus;
-    private double amountBgn;
-    private double amountEur;
-    private LocalDate date;
     private String note;
     private String factureNumber;
 

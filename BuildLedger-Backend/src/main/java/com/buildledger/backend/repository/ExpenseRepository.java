@@ -1,6 +1,6 @@
 package com.buildledger.backend.repository;
 
-import com.buildledger.backend.model.ledger.Expense;
+import com.buildledger.backend.model.ledger.accounting.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
