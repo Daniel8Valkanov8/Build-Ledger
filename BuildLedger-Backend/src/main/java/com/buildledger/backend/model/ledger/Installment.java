@@ -19,25 +19,10 @@ public class Installment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String installment;
-
-    private double amountInPercent;
-
     private double installmentAmount;
-
 
     @Column
     private LocalDate installmentDate;
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private TransactionStatus transactionStatus;
-
-    @ManyToOne
-    @JoinColumn(name = "purchaser_id")
-    private Purchaser purchaser;
-
-    private double installmentReceivedAmount;
 
 
     @Column

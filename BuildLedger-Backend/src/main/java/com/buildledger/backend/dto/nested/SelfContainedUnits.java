@@ -12,5 +12,5 @@ import lombok.Setter;
 public class SelfContainedUnits {
     private long id;
     private String number;
-    private double price;
+    private double priceEur;
 }

@@ -16,6 +16,8 @@ import AllGarages from "./garages/AllGaragesComponent";
 import AllParkingPlaces from "./parking-places/AllParkingPlacesComponent";
 import CreateSell from "./ledger/sell/CreateSell";
 import CreatePaymentSchema from "./ledger/payment/create-payment-schema/CreatePaymentSchema";
+import IncomesTable from "./ledger/income/IncomesTable";
+import ExpencesTable from "./ledger/expence/ExpenceTable";
 
 const AppContent = () => {
   const location = useLocation();
@@ -54,7 +56,9 @@ const AppContent = () => {
           <Route path="/building/:id" element={<div>Building Template</div>} />
           <Route path="/house/:id" element={<div>House Template</div>} />
           <Route path="*" element={<div>404 Not Found</div>} />
-
+          <Route path="/create-payment-schema" element={<CreatePaymentSchema/>} />
+          
+          
           <Route path="/cooperation/:id" element={<CooperationTemplate />} />
           <Route path="/quick-create/:id" element={<CreateCooperationObjects />} />
           <Route path="/cooperation/:id/apartments" element={<AllApartments />} /> {/* Добавяме новия маршрут */}
@@ -62,7 +66,8 @@ const AppContent = () => {
           <Route path="/cooperation/:id/garages" element={<AllGarages />} /> 
           <Route path="/cooperation/:id/parking-places" element={<AllParkingPlaces />} /> 
           <Route path="/cooperation/:id/create-sell" element={<CreateSell />} /> 
-          <Route path="/create-payment-schema" element={<CreatePaymentSchema/>} />
+          <Route path="/cooperation/:id/incomes-table" element={<IncomesTable />} /> 
+          <Route path="/cooperation/:id/expenses-table" element={<ExpencesTable />} /> 
           
         </Routes>
       </div>

@@ -29,10 +29,12 @@ public class Sell {
     private double brokerProfitInEuro;
     private double brokerProfitInPercentage;
 
-    private LocalDate contractDate;
 
     private String description;
-    private String filePath;
+    //todo file upload
+    //private String filePath;
+    //private LocalDate contractDate;
+
 
     @ManyToOne()
     @JoinColumn(name = "broker_id")
